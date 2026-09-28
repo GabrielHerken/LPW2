@@ -22,10 +22,9 @@ export class Vector2 {
 }
 
 export class GameObject {
-    constructor(sprite, position, velocity, size) {
+    constructor(sprite, position, velocity) {
         this.sprite = sprite;
         this.position = position;
         this.velocity = velocity;
-        this.size = size;
     }
 }

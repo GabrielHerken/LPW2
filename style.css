@@ -3,7 +3,9 @@ body {
 }
 
 canvas {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    height: 90vh;
+    left: calc(50% - 90vh / 2);
+    top: calc(50% - 90vh / 2);
+    image-rendering: pixelated;
 }

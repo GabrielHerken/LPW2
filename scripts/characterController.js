@@ -1,5 +1,6 @@
-import { Vector2, GameObject } from '../stdModule.js';
-import { addFrameListener, createGameObject, removeFrameListener, removeGameObject } from '../gameController.js';
+import { Vector2, GameObject } from './stdModule.js';
+import { addFrameListener, createGameObject, removeFrameListener, removeGameObject } from './gameController.js';
+import { canvas } from './renderController.js';
 
 let input = new Vector2(0, 0);
 const inputMapper = {
@@ -12,19 +13,19 @@ const inputMapper = {
 let character;
 
 let characterSprite = new Image();
-characterSprite.src = '../../sprites/protagonista.png';
+characterSprite.src = '../sprites/protagonista.png';
 characterSprite.addEventListener('load', () => {
-    const initialPosition = new Vector2(400, 400);
-    const initialVelocity = new Vector2(10, 10);
-    const initialSize = new Vector2(128, 128);
+    const canvasElement = canvas.entitiesLayer.element;
+    const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+    const initialVelocity = new Vector2(0, 0);
 
-    character = createGameObject(initialPosition, initialVelocity, initialSize, characterSprite);
+    character = createGameObject(initialPosition, initialVelocity, characterSprite, 'entitiesLayer');
 
     addFrameListener(repeatOnFrame);
 });
 
 function repeatOnFrame() {
-    character.velocity = input.normalize().multiplicar(5);
+    character.velocity = input;
 }
 
 function inputHandler(e, down) {

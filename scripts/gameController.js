@@ -1,15 +1,15 @@
-import { renderFrame, addElementToRender, removeElementToRender } from './renderization/renderController.js';
+import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
 import { Vector2, GameObject } from './stdModule.js';
 
 //GAME OBJECT HANDLING
 
 const gameObjects = []
 
-export function createGameObject(position, velocity, size, sprite) {
-    const newGameObject = new GameObject(sprite, position, velocity, size);
+export function createGameObject(position, velocity, sprite, layer) {
+    const newGameObject = new GameObject(sprite, position, velocity);
 
     gameObjects.push(newGameObject);
-    addElementToRender(newGameObject);
+    addElementToRender(newGameObject, layer);
 
     return newGameObject;
 }
