@@ -13,7 +13,7 @@ const inputMapper = {
 let character;
 
 let characterSprite = new Image();
-characterSprite.src = '../sprites/protagonista.png';
+characterSprite.src = './sprites/protagonista.png';
 characterSprite.addEventListener('load', () => {
     const canvasElement = canvas.entitiesLayer.element;
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
