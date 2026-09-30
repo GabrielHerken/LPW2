@@ -11,5 +11,5 @@ backgroundSprite.addEventListener('load', () => {
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
     const initialVelocity = new Vector2(0, 0);
 
-    background = createGameObject(initialPosition, initialVelocity, backgroundSprite, 'backgroundLayer');
+    background = createGameObject(initialPosition, initialVelocity, 0, backgroundSprite, 'backgroundLayer');
 });

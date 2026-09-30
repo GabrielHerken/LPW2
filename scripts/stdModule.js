@@ -19,12 +19,24 @@ export class Vector2 {
     }
 
     static zero = new Vector2(0, 0);
+    static up = new Vector2(0, -1);
 }
 
 export class GameObject {
-    constructor(sprite, position, velocity) {
+    constructor(sprite, layer, position, velocity, rotation) {
         this.sprite = sprite;
+        this.layer = layer;
         this.position = position;
         this.velocity = velocity;
+        this.rotation = rotation;
+    }
+}
+
+export class Attack {
+    constructor(owner, attackEffect, maxCooldown) {
+        this.owner = owner;
+        this.attackEffect = attackEffect;
+        this.maxCooldown = maxCooldown;
+        this.currentCooldown = 0;
     }
 }

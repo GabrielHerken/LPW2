@@ -5,8 +5,8 @@ import { Vector2, GameObject } from './stdModule.js';
 
 const gameObjects = []
 
-export function createGameObject(position, velocity, sprite, layer) {
-    const newGameObject = new GameObject(sprite, position, velocity);
+export function createGameObject(position, velocity, rotation, sprite, layer) {
+    const newGameObject = new GameObject(sprite, layer, position, velocity, rotation);
 
     gameObjects.push(newGameObject);
     addElementToRender(newGameObject, layer);
@@ -15,8 +15,12 @@ export function createGameObject(position, velocity, sprite, layer) {
 }
 
 export function removeGameObject(gameObject) {
-    removeElementToRender(gameObject);
+    removeElementToRender(gameObject, gameObject.layer);
     gameObjects.splice(gameObjects.indexOf(gameObject), 1);
+}
+
+export function gameObjectExists(gameObject) {
+    return gameObjects.indexOf(gameObject) != -1;
 }
 
 //FRAME
@@ -31,8 +35,16 @@ export function removeFrameListener(listener) {
     frameListeners.splice(frameListeners.indexOf(listener), 1);
 }
 
+var lastTimestamp;
+
 function stepFrame(timestamp) {
-    frameListeners.forEach(listener => listener());
+    if (!lastTimestamp)
+        lastTimestamp = timestamp;
+
+    var deltaTime = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+
+    frameListeners.forEach(listener => listener(deltaTime));
 
     handlePhysics();
 
