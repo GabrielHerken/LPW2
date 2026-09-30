@@ -1,4 +1,4 @@
-import { Vector2 } from "./stdModule.js";
+import { Transform, Vector2 } from "./stdModule.js";
 import { createGameObject } from "./gameController.js";
 import { canvas } from './renderController.js';
 
@@ -11,5 +11,5 @@ backgroundSprite.addEventListener('load', () => {
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
     const initialVelocity = new Vector2(0, 0);
 
-    background = createGameObject(initialPosition, initialVelocity, 0, backgroundSprite, 'backgroundLayer');
+    background = createGameObject(new Transform(initialPosition, 0), initialVelocity, backgroundSprite, 'backgroundLayer');
 });

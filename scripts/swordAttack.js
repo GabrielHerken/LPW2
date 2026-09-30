@@ -1,5 +1,5 @@
 import { createGameObject, gameObjectExists, removeGameObject } from "./gameController.js";
-import { Attack, Vector2 } from "./stdModule.js";
+import { Attack, Transform, Vector2 } from "./stdModule.js";
 
 //PROPERTIES
 
@@ -19,10 +19,10 @@ const sprite = new Image();
 sprite.src = './sprites/ataqueEspada.png';
 
 function spawnGO(attackObject, direction) {
-    const position = attackObject.owner.position.somar(direction.multiplicar(spriteDistanceFromOwner));
-    const rotation = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
+    //const position = attackObject.owner.position.somar(direction.multiplicar(spriteDistanceFromOwner));
+    //const rotation = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
     
-    return createGameObject(position, Vector2.zero, rotation, sprite, 'attacksLayer');
+    return createGameObject(new Transform(Vector2.up.multiplicar(spriteDistanceFromOwner), 0), Vector2.zero, sprite, 'attacksLayer', attackObject.owner);
 }
 
 function despawnGO(gameObject) {

@@ -1,8 +1,12 @@
-import { Vector2, GameObject, Attack } from './stdModule.js';
+import { Vector2, GameObject, Attack, Entity, Transform } from './stdModule.js';
 import { addFrameListener, createGameObject, removeFrameListener, removeGameObject } from './gameController.js';
 import { canvas, getMousePosition } from './renderController.js';
 import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
+
+//PROPERTIES
+const initialMaxHealth = 100;
+const velocity = 100;
 
 //CHARACTER CREATION
 
@@ -13,11 +17,10 @@ characterSprite.src = './sprites/protagonista.png';
 characterSprite.addEventListener('load', () => {
     const canvasElement = canvas.entitiesLayer.element;
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
-    const initialVelocity = new Vector2(0, 0);
 
-    character = createGameObject(initialPosition, initialVelocity, 0, characterSprite, 'entitiesLayer');
+    character = new Entity(createGameObject(new Transform(initialPosition, 0), Vector2.zero, characterSprite, 'entitiesLayer'), initialMaxHealth);
 
-    attacks.push(getSwordAttackObject(character));
+    attacks.push(getSwordAttackObject(character.gameObject));
 
     addFrameListener(repeatOnFrame);
 });
@@ -37,7 +40,7 @@ const inputMapper = {
 }
 
 function repeatOnFrame(deltaTime) {
-    character.velocity = input;
+    character.gameObject.velocity = input.multiplicar(velocity);
 }
 
 function inputHandler(e, down) {
@@ -48,4 +51,4 @@ function inputHandler(e, down) {
 
 document.addEventListener('keydown', e => inputHandler(e, true));
 document.addEventListener('keyup', e => inputHandler(e, false));
-document.addEventListener('click', e => tryToAttack(attacks[0], getMousePosition(e).somar(character.position.multiplicar(-1)).normalize()));
+document.addEventListener('click', e => tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize()));

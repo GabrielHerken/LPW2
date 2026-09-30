@@ -1,13 +1,15 @@
+import { removeCollider } from './collisionController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
-import { Vector2, GameObject } from './stdModule.js';
+import { Vector2, GameObject, Transform } from './stdModule.js';
 
 //GAME OBJECT HANDLING
 
-const gameObjects = []
+export const root = new GameObject(null, null, new Transform(Vector2.zero, 0), Vector2.zero, null);
+const gameObjects = [root];
 
-export function createGameObject(position, velocity, rotation, sprite, layer) {
-    const newGameObject = new GameObject(sprite, layer, position, velocity, rotation);
-
+export function createGameObject(localTransform, velocity, sprite, layer, parent=root) {
+    const newGameObject = new GameObject(sprite, layer, localTransform, velocity, parent);
+    parent.children.push(newGameObject);
     gameObjects.push(newGameObject);
     addElementToRender(newGameObject, layer);
 
@@ -15,6 +17,9 @@ export function createGameObject(position, velocity, rotation, sprite, layer) {
 }
 
 export function removeGameObject(gameObject) {
+    gameObject.parent.children.splice(gameObject.parent.children.indexOf(gameObject), 1);
+    gameObject.children.forEach(removeGameObject);
+    gameObject.colliders.forEach(removeCollider);
     removeElementToRender(gameObject, gameObject.layer);
     gameObjects.splice(gameObjects.indexOf(gameObject), 1);
 }
@@ -46,7 +51,7 @@ function stepFrame(timestamp) {
 
     frameListeners.forEach(listener => listener(deltaTime));
 
-    handlePhysics();
+    handlePhysics(deltaTime);
 
     renderFrame();
 
@@ -57,12 +62,15 @@ requestAnimationFrame(stepFrame);
 
 //PHYSICS
 
-function handlePhysics() {
-    handleVelocities();
+function handlePhysics(dt) {
+    gameObjects.forEach(gameObject => {
+        if (gameObject.velocity != Vector2.zero) handleVelocity(dt, gameObject);
+
+        gameObject.setGlobalTransform();
+    });
+    
 }
 
-function handleVelocities() {
-    gameObjects.forEach(gameObject => {
-        gameObject.position = gameObject.position.somar(gameObject.velocity);
-    });
+function handleVelocity(dt, gameObject) {
+    gameObject.localTransform.position = gameObject.localTransform.position.somar(gameObject.velocity.multiplicar(dt / 1000));
 }
