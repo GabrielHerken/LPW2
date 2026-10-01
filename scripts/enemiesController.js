@@ -1,8 +1,10 @@
+import { createCircleCollider } from "./collisionController.js";
 import { createGameObject } from "./gameController.js";
 import { Entity, Transform, Vector2 } from "./stdModule.js";
 
 class Enemy {
-    constructor(spriteURL, maxHealth) {
+    constructor(name, spriteURL, maxHealth) {
+        this.name = name;
         this.sprite = new Image();
         this.sprite.src = spriteURL;
         this.maxHealth = maxHealth
@@ -10,13 +12,18 @@ class Enemy {
 }
 
 const enemies = {
-    basicEnemy: new Enemy('./sprites/inimigo.png', 20)
+    basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 20)
 }
 
-function createEnemy(position) {
-    return new Entity(createGameObject(new Transform(position, 0), Vector2.zero, enemies.basicEnemy.sprite, 'entitiesLayer', 'Inimigo'), enemies.basicEnemy.maxHealth);
+function createEnemy(enemy, position) {
+    const enemyGO = createGameObject(new Transform(position), Vector2.zero, enemy.sprite, 'entitiesLayer', enemy.name);
+    const newEnemy = new Entity(enemyGO, enemy.maxHealth);
+
+    enemyGO.colliders.push(createCircleCollider(Vector2.zero, 32, enemyGO));
+
+    return newEnemy;
 }
 
-createEnemy(new Vector2(100, 40));
-createEnemy(new Vector2(30, 30));
-createEnemy(new Vector2(170, 30));
+createEnemy(enemies.basicEnemy, new Vector2(100, 40));
+createEnemy(enemies.basicEnemy, new Vector2(30, 30));
+createEnemy(enemies.basicEnemy, new Vector2(170, 30));

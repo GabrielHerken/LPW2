@@ -20,11 +20,14 @@ export class Vector2 {
 
     static zero = new Vector2(0, 0);
     static up = new Vector2(0, -1);
+    static right = new Vector2(1, 0);
+    static one = new Vector2(1, 1);
 }
 
 export class Transform {
-    constructor(position, rotation) {
+    constructor(position=Vector2.zero, rotation=0, scale=Vector2.one) {
         this.position = position;
+        this.scale = scale;
         this.rotation = rotation;
     }
 }
@@ -54,12 +57,13 @@ export class GameObject {
         const globalTransform = new Transform();
         globalTransform.position = new Vector2();
         globalTransform.position.x = this.parent.globalTransform.position.x
-                                   + this.localTransform.position.x * Math.cos(this.parent.globalTransform.rotation)
-                                   - this.localTransform.position.y * Math.sin(this.parent.globalTransform.rotation);
+                                   + this.localTransform.position.x * Math.cos(this.parent.globalTransform.rotation * Math.PI / 180)
+                                   - this.localTransform.position.y * Math.sin(this.parent.globalTransform.rotation * Math.PI / 180);
         globalTransform.position.y = this.parent.globalTransform.position.y
-                                   + this.localTransform.position.x * Math.sin(this.parent.globalTransform.rotation)
-                                   + this.localTransform.position.y * Math.cos(this.parent.globalTransform.rotation);
+                                   + this.localTransform.position.x * Math.sin(this.parent.globalTransform.rotation * Math.PI / 180)
+                                   + this.localTransform.position.y * Math.cos(this.parent.globalTransform.rotation * Math.PI / 180);
         globalTransform.rotation = this.localTransform.rotation + this.parent.globalTransform.rotation;
+        globalTransform.scale = new Vector2(this.parent.globalTransform.scale.x * this.localTransform.scale.x, this.parent.globalTransform.scale.y * this.localTransform.scale.y);
         this.globalTransform = globalTransform;
     }
 }

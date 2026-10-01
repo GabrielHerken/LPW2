@@ -1,3 +1,4 @@
+import { createCircleCollider } from "./collisionController.js";
 import { createGameObject, gameObjectExists, removeGameObject } from "./gameController.js";
 import { Attack, Transform, Vector2 } from "./stdModule.js";
 
@@ -6,6 +7,20 @@ import { Attack, Transform, Vector2 } from "./stdModule.js";
 const spriteDistanceFromOwner = 30;
 const gameObjectDuration = .25;
 const maxCooldown = 0.5;
+const colliders = [
+    {
+        position: Vector2.up.multiplicar(6),
+        radius: 20
+    },
+    {
+        position: Vector2.right.multiplicar(18).somar(Vector2.up.multiplicar(3)),
+        radius: 20
+    },
+    {
+        position: Vector2.right.multiplicar(-18).somar(Vector2.up.multiplicar(3)),
+        radius: 20
+    }
+];
 
 //ATTACK OBJECT
 
@@ -19,9 +34,12 @@ const sprite = new Image();
 sprite.src = './sprites/ataqueEspada.png';
 
 function spawnGO(attackObject, direction) {
-    const rotation = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
+    const rotation = 90 + Math.atan2(direction.y, direction.x) * 180 / Math.PI;
+    const gameObject = createGameObject(new Transform(direction.multiplicar(spriteDistanceFromOwner), rotation), Vector2.zero, sprite, 'attacksLayer', 'SwordAttack', attackObject.owner);
     
-    return createGameObject(new Transform(direction.multiplicar(spriteDistanceFromOwner), rotation), Vector2.zero, sprite, 'attacksLayer', 'SwordAttack', attackObject.owner);
+    colliders.forEach(collider => createCircleCollider(collider.position, collider.radius, gameObject));
+
+    return gameObject;
 }
 
 function despawnGO(gameObject) {

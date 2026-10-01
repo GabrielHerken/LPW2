@@ -30,11 +30,12 @@ const layersToRender = {
 
 //RENDERING FUNCTIONS
 
-function renderImage(image, position, rotation, ctx) {
+function renderImage(image, transform, ctx) {
     ctx.save();
 
-    ctx.translate(position.x, position.y);
-    ctx.rotate((Math.PI / 180) * rotation);
+    ctx.translate(transform.position.x, transform.position.y);
+    ctx.rotate((Math.PI / 180) * transform.rotation);
+    ctx.scale(transform.scale.x, transform.scale.y)
     ctx.drawImage(image, -image.width / 2, -image.height / 2);
 
     ctx.restore();
@@ -45,7 +46,7 @@ export function renderFrame() {
     Object.values(canvas).forEach(cnv => cnv.context.clearRect(0, 0, cnv.element.width, cnv.element.height));
 
     //RENDERING EACH LAYER
-    Object.keys(canvas).forEach(key => layersToRender[key].forEach(gameObject => renderImage(gameObject.sprite, gameObject.globalTransform.position, gameObject.globalTransform.rotation, canvas[key].context)));
+    Object.keys(canvas).forEach(key => layersToRender[key].forEach(gameObject => renderImage(gameObject.sprite, gameObject.globalTransform, canvas[key].context)));
 }
 
 export function addElementToRender(element, layer) {

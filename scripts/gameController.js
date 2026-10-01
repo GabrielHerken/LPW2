@@ -18,8 +18,10 @@ export function createGameObject(localTransform, velocity, sprite, layer, name, 
 
 export function removeGameObject(gameObject) {
     gameObject.parent.children.splice(gameObject.parent.children.indexOf(gameObject), 1);
-    gameObject.children.forEach(removeGameObject);
     gameObject.colliders.forEach(removeCollider);
+    const childs = [];
+    gameObject.children.forEach((child) => childs.push(child));
+    childs.forEach(removeGameObject);
     removeElementToRender(gameObject, gameObject.layer);
     gameObjects.splice(gameObjects.indexOf(gameObject), 1);
 }

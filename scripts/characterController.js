@@ -3,6 +3,7 @@ import { addFrameListener, createGameObject, removeFrameListener, removeGameObje
 import { canvas, getMousePosition } from './renderController.js';
 import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
+import { createCircleCollider } from './collisionController.js';
 
 //PROPERTIES
 const initialMaxHealth = 100;
@@ -18,7 +19,8 @@ characterSprite.addEventListener('load', () => {
     const canvasElement = canvas.entitiesLayer.element;
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
 
-    character = new Entity(createGameObject(new Transform(initialPosition, 0), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
+    character = new Entity(createGameObject(new Transform(initialPosition), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
+    character.gameObject.colliders.push(createCircleCollider(Vector2.zero, 32, character.gameObject));
 
     attacks.push(getSwordAttackObject(character.gameObject));
 
