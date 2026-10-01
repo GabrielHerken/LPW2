@@ -1,18 +1,20 @@
+import { basicEnemyStartAI } from "./basicEnemyAI.js";
 import { createCircleCollider } from "./collisionController.js";
-import { createGameObject, printGOS, removeGameObject } from "./gameController.js";
+import { createGameObject, removeGameObject } from "./gameController.js";
 import { Entity, Transform, Vector2 } from "./stdModule.js";
 
 class Enemy {
-    constructor(name, spriteURL, maxHealth) {
+    constructor(name, spriteURL, maxHealth, startAI) {
         this.name = name;
         this.sprite = new Image();
         this.sprite.src = spriteURL;
-        this.maxHealth = maxHealth
+        this.maxHealth = maxHealth;
+        this.startAI = startAI;
     }
 }
 
 const enemies = {
-    basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 20)
+    basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 20, basicEnemyStartAI)
 }
 
 function createEnemy(enemy, position) {
@@ -26,16 +28,20 @@ function createEnemy(enemy, position) {
     
     createCircleCollider(Vector2.zero, 32 / 2, enemyGO);
 
-    newEnemy.die = () => die(newEnemy);
+    const endAI = enemy.startAI(newEnemy);
+    newEnemy.die = () => die(newEnemy, endAI);
 
     return newEnemy;
 }
 
-function die(enemy) {
-    //printGOS();
+function die(enemy, endAI) {
+    endAI();
+
     removeGameObject(enemy.gameObject);
 }
 
-createEnemy(enemies.basicEnemy, new Vector2(100, 40));
-createEnemy(enemies.basicEnemy, new Vector2(30, 30));
-createEnemy(enemies.basicEnemy, new Vector2(170, 30));
+export function start() {
+    createEnemy(enemies.basicEnemy, new Vector2(100, 30));
+    createEnemy(enemies.basicEnemy, new Vector2(30, 30));
+    createEnemy(enemies.basicEnemy, new Vector2(170, 30));
+}

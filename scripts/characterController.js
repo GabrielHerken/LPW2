@@ -4,6 +4,7 @@ import { canvas, getMousePosition } from './renderController.js';
 import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
+import { start } from './enemiesController.js';
 
 //PROPERTIES
 const initialMaxHealth = 100;
@@ -11,7 +12,7 @@ const velocity = 100;
 
 //CHARACTER CREATION
 
-let character;
+export let character;
 
 let characterSprite = new Image();
 characterSprite.src = './sprites/protagonista.png';
@@ -30,6 +31,8 @@ characterSprite.addEventListener('load', () => {
     attacks.push(getSwordAttackObject(character.gameObject));
 
     addFrameListener(repeatOnFrame);
+
+    start();
 });
 
 //ATTACKS

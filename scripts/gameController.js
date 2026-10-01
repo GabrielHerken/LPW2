@@ -7,10 +7,6 @@ import { Vector2, GameObject, Transform } from './stdModule.js';
 export const root = new GameObject(null, null, new Transform(Vector2.zero, 0), Vector2.zero, null, 'root');
 const gameObjects = [root];
 
-export function printGOS() {
-    console.log(gameObjects);
-}
-
 export function createGameObject(localTransform, velocity, sprite, layer, name, parent=root) {
     const newGameObject = new GameObject(sprite, layer, localTransform, velocity, parent, name);
     parent.children.push(newGameObject);
@@ -68,7 +64,7 @@ function stepFrame(timestamp) {
 
             gameObject.colliders.forEach(collider => collider.globalTransform = collider.localTransform.returnGlobalTransform(gameObject.globalTransform));
         }
-    })
+    });
 
     //RENDERIZATION
     renderFrame();
