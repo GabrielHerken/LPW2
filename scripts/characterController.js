@@ -15,6 +15,7 @@ const velocity = 100;
 export let character = null;
 
 export function createCharacter() {
+    input = Vector2.zero;
     const characterSprite = new Image();
     characterSprite.src = './sprites/protagonista.png';
     characterSprite.onload = () => {
@@ -77,4 +78,5 @@ function inputHandler(e, down) {
     if (e.repeat || !inputMapper[e.key]) return;
 
     input = input.somar(inputMapper[e.key].multiplicar(down == true ? 1 : -1));
+    input = new Vector2(Math.min(Math.max(input.x, -1), 1), Math.min(Math.max(input.y, -1), 1));
 }

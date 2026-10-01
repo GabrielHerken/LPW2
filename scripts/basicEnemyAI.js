@@ -20,10 +20,8 @@ export function basicEnemyStartAI(enemy) {
 }
 
 function everyFrame(gameObject, attacks, dt) {
-    if (mainCharacter == null) {
-        //console.log(null);
+    if (mainCharacter == null)
         return;
-    }
         
     //PATHFINDING
     goToPlayer(gameObject, mainCharacter.gameObject);

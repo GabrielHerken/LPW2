@@ -29,10 +29,8 @@ export function removeGameObject(gameObject) {
         return;
 
     gameObject.parent.children.splice(index, 1);
-    gameObject.colliders.forEach(removeCollider);
-    const childs = [];
-    gameObject.children.forEach((child) => childs.push(child));
-    childs.forEach(removeGameObject);
+    Array.from(gameObject.colliders).forEach(removeCollider);
+    Array.from(gameObject.children).forEach(removeGameObject);
     removeElementToRender(gameObject, gameObject.layer);
     gameObjects.splice(gameObjects.indexOf(gameObject), 1);
 }
@@ -100,7 +98,7 @@ function handleVelocity(dt, gameObject) {
 //GAME STATE HANDLING
 
 export function characterDied() {
-    frameListeners.forEach(removeFrameListener);
+    Array.from(frameListeners).forEach(removeFrameListener);
     Array.from(gameObjects).forEach(removeGameObject);
 
     setTimeout(() => {

@@ -12,20 +12,16 @@ export function tryToAttack(attack, direction, filter='') {
 }
 
 function deduceCooldowns(deltaTime) {
-    const removeElements = [];
-
-    attacksInCooldown.forEach(attack => {
+    Array.from(attacksInCooldown).forEach(attack => {
         if (!gameObjectExists(attack.owner)) {
-            removeElements.push(attack)
+            attacksInCooldown.splice(attacksInCooldown.indexOf(attack), 1);
         } else {
             attack.currentCooldown -= deltaTime / 1000;
 
             if (attack.currentCooldown <= 0)
-                removeElements.push(attack);
+                attacksInCooldown.splice(attacksInCooldown.indexOf(attack), 1);
         }
     });
-
-    removeElements.forEach(attack => attacksInCooldown.splice(attacksInCooldown.indexOf(attack), 1));
 }
 
 export function attackControllerStart() {
