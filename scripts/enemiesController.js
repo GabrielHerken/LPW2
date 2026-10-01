@@ -14,7 +14,7 @@ const enemies = {
 }
 
 function createEnemy(position) {
-    return new Entity(createGameObject(new Transform(position, 0), Vector2.zero, enemies.basicEnemy.sprite, 'entitiesLayer'), enemies.basicEnemy.maxHealth);
+    return new Entity(createGameObject(new Transform(position, 0), Vector2.zero, enemies.basicEnemy.sprite, 'entitiesLayer', 'Inimigo'), enemies.basicEnemy.maxHealth);
 }
 
 createEnemy(new Vector2(100, 40));

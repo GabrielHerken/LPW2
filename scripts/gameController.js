@@ -4,11 +4,11 @@ import { Vector2, GameObject, Transform } from './stdModule.js';
 
 //GAME OBJECT HANDLING
 
-export const root = new GameObject(null, null, new Transform(Vector2.zero, 0), Vector2.zero, null);
+export const root = new GameObject(null, null, new Transform(Vector2.zero, 0), Vector2.zero, null, 'root');
 const gameObjects = [root];
 
-export function createGameObject(localTransform, velocity, sprite, layer, parent=root) {
-    const newGameObject = new GameObject(sprite, layer, localTransform, velocity, parent);
+export function createGameObject(localTransform, velocity, sprite, layer, name, parent=root) {
+    const newGameObject = new GameObject(sprite, layer, localTransform, velocity, parent, name);
     parent.children.push(newGameObject);
     gameObjects.push(newGameObject);
     addElementToRender(newGameObject, layer);

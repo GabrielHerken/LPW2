@@ -30,7 +30,7 @@ export class Transform {
 }
 
 export class GameObject {
-    constructor(sprite, layer, localTransform, velocity, parent) {
+    constructor(sprite, layer, localTransform, velocity, parent, name) {
         this.sprite = sprite;
         this.layer = layer;
         this.localTransform = localTransform;
@@ -38,6 +38,7 @@ export class GameObject {
         this.colliders = [];
         this.children = [];
         this.parent = parent;
+        this.name = name;
         if (parent != null) {
             this.setGlobalTransform();
         } else {
@@ -58,7 +59,7 @@ export class GameObject {
         globalTransform.position.y = this.parent.globalTransform.position.y
                                    + this.localTransform.position.x * Math.sin(this.parent.globalTransform.rotation)
                                    + this.localTransform.position.y * Math.cos(this.parent.globalTransform.rotation);
-        globalTransform.rotation = Math.atan2(globalTransform.position.y, globalTransform.position.x);
+        globalTransform.rotation = this.localTransform.rotation + this.parent.globalTransform.rotation;
         this.globalTransform = globalTransform;
     }
 }

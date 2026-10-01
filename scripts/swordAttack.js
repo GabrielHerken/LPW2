@@ -19,10 +19,9 @@ const sprite = new Image();
 sprite.src = './sprites/ataqueEspada.png';
 
 function spawnGO(attackObject, direction) {
-    //const position = attackObject.owner.position.somar(direction.multiplicar(spriteDistanceFromOwner));
-    //const rotation = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
+    const rotation = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
     
-    return createGameObject(new Transform(Vector2.up.multiplicar(spriteDistanceFromOwner), 0), Vector2.zero, sprite, 'attacksLayer', attackObject.owner);
+    return createGameObject(new Transform(direction.multiplicar(spriteDistanceFromOwner), rotation), Vector2.zero, sprite, 'attacksLayer', 'SwordAttack', attackObject.owner);
 }
 
 function despawnGO(gameObject) {

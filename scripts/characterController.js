@@ -18,7 +18,7 @@ characterSprite.addEventListener('load', () => {
     const canvasElement = canvas.entitiesLayer.element;
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
 
-    character = new Entity(createGameObject(new Transform(initialPosition, 0), Vector2.zero, characterSprite, 'entitiesLayer'), initialMaxHealth);
+    character = new Entity(createGameObject(new Transform(initialPosition, 0), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
 
     attacks.push(getSwordAttackObject(character.gameObject));
 
