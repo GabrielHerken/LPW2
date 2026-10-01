@@ -7,6 +7,7 @@ import { Attack, Entity, Transform, Vector2 } from "./stdModule.js";
 const spriteDistanceFromOwner = 30;
 const gameObjectDuration = .25;
 const maxCooldown = 0.5;
+const damage = 10;
 const colliders = [
     {
         position: Vector2.up.multiplicar(6),
@@ -46,17 +47,17 @@ function despawnGO(gameObject) {
     removeGameObject(gameObject);
 }
 
-function swordAttack(attackObject, direction) {
+function swordAttack(attackObject, direction, filter) {
     const gameObject = spawnGO(attackObject, direction);
 
     const hitted = [];
     gameObject.colliders.forEach(collider => {
-        const collided = checkCollision(collider, ['damageable']);
+        const collided = checkCollision(collider, filter == '' ? ['damageable'] : ['damageable', filter]);
         collided.forEach(collider => {if (hitted.indexOf(collider.owner) == -1) hitted.push(collider.owner)});
     })
 
     hitted.forEach(enemy => {
-        enemy.getComponent(Entity).getHit(10);
+        enemy.getComponent(Entity).getHit(damage);
     });
 
     setTimeout(() => despawnGO(gameObject), gameObjectDuration * 1000);

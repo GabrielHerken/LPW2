@@ -35,7 +35,7 @@ function checkCircleCircleCollision(collider1, collider2, filter) {
     });
     if (toReturn) return false;
 
-    return Math.pow(collider1.globalTransform.position.x - collider2.globalTransform.position.x, 2) + Math.pow(collider1.globalTransform.position.y - collider2.globalTransform.position.y, 2) <= Math.pow(collider1.radius + collider2.radius, 2);
+    return collider1.globalTransform.position.checkDistance(collider2.globalTransform.position, collider1.radius + collider2.radius);
 }
 
 export function checkCollision(collider, filter=[]) {

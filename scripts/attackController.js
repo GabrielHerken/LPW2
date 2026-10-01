@@ -3,11 +3,11 @@ import { Vector2 } from "./stdModule.js";
 
 const attacksInCooldown = [];
 
-export function tryToAttack(attack, direction) {
+export function tryToAttack(attack, direction, filter='') {
     if (attack.currentCooldown <= 0) {
         attack.currentCooldown = attack.maxCooldown;
         attacksInCooldown.push(attack);
-        attack.attackEffect(attack, direction);
+        attack.attackEffect(attack, direction, filter);
     }
 }
 
@@ -28,4 +28,6 @@ function deduceCooldowns(deltaTime) {
     removeElements.forEach(attack => attacksInCooldown.splice(attacksInCooldown.indexOf(attack), 1));
 }
 
-addFrameListener(deduceCooldowns);
+export function attackControllerStart() {
+    addFrameListener(deduceCooldowns);
+}

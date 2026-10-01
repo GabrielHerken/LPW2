@@ -14,7 +14,7 @@ class Enemy {
 }
 
 const enemies = {
-    basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 20, basicEnemyStartAI)
+    basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 10, basicEnemyStartAI)
 }
 
 function createEnemy(enemy, position) {

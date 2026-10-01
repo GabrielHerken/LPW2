@@ -1,5 +1,5 @@
 import { Vector2, GameObject, Attack, Entity, Transform } from './stdModule.js';
-import { addFrameListener, createGameObject, removeFrameListener, removeGameObject } from './gameController.js';
+import { addFrameListener, characterDied, createGameObject, removeFrameListener, removeGameObject } from './gameController.js';
 import { canvas, getMousePosition } from './renderController.js';
 import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
@@ -7,37 +7,57 @@ import { createCircleCollider } from './collisionController.js';
 import { start } from './enemiesController.js';
 
 //PROPERTIES
-const initialMaxHealth = 100;
+const initialMaxHealth = 50;
 const velocity = 100;
 
 //CHARACTER CREATION
 
-export let character;
+export let character = null;
 
-let characterSprite = new Image();
-characterSprite.src = './sprites/protagonista.png';
-characterSprite.addEventListener('load', () => {
-    const canvasElement = canvas.entitiesLayer.element;
-    const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+export function createCharacter() {
+    const characterSprite = new Image();
+    characterSprite.src = './sprites/protagonista.png';
+    characterSprite.onload = () => {
+        const canvasElement = canvas.entitiesLayer.element;
+        const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
 
-    character = new Entity(createGameObject(new Transform(initialPosition), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
-    character.gameObject.colliders.push(createCircleCollider(Vector2.zero, 32 / 2, character.gameObject));
+        character = new Entity(createGameObject(new Transform(initialPosition), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
+        createCircleCollider(Vector2.zero, 32 / 2, character.gameObject);
 
-    character.gameObject.addTag('damageable');
-    character.gameObject.addTag('character');
+        character.gameObject.addTag('damageable');
+        character.gameObject.addTag('character');
 
-    character.gameObject.addComponent(Entity, character);
+        character.gameObject.addComponent(Entity, character);
 
-    attacks.push(getSwordAttackObject(character.gameObject));
+        character.die = () => {
+            removeFrameListener(repeatOnFrame);
+            document.removeEventListener('keydown', keyDownEvent);
+            document.removeEventListener('keyup', keyUpEvent);
+            document.removeEventListener('click', clickEvent);
+            removeGameObject(character.gameObject);
+            character = null;
+            characterDied();
+        };
 
-    addFrameListener(repeatOnFrame);
+        attacks = [];
+        attacks.push(getSwordAttackObject(character.gameObject));
 
-    start();
-});
+        addFrameListener(repeatOnFrame);
+
+        const keyDownEvent = e => inputHandler(e, true);
+        const keyUpEvent = e => inputHandler(e, false);
+        const clickEvent =  e => tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), 'enemy');
+        document.addEventListener('keydown', keyDownEvent);
+        document.addEventListener('keyup', keyUpEvent);
+        document.addEventListener('click', clickEvent);
+
+        start();
+    }
+}
 
 //ATTACKS
 
-const attacks = [];
+let attacks = [];
 
 //INPUTS
 
@@ -58,7 +78,3 @@ function inputHandler(e, down) {
 
     input = input.somar(inputMapper[e.key].multiplicar(down == true ? 1 : -1));
 }
-
-document.addEventListener('keydown', e => inputHandler(e, true));
-document.addEventListener('keyup', e => inputHandler(e, false));
-document.addEventListener('click', e => tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize()));

@@ -18,6 +18,10 @@ export class Vector2 {
         return new Vector2(this.x / length, this.y / length);
     }
 
+    checkDistance(other, distance) {
+        return (other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y) <= distance * distance;
+    } 
+
     static zero = new Vector2(0, 0);
     static up = new Vector2(0, -1);
     static right = new Vector2(1, 0);

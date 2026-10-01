@@ -1,3 +1,6 @@
+import { attackControllerStart } from './attackController.js';
+import { createBackground } from './backgroundController.js';
+import { createCharacter } from './characterController.js';
 import { removeCollider } from './collisionController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
 import { Vector2, GameObject, Transform } from './stdModule.js';
@@ -17,7 +20,15 @@ export function createGameObject(localTransform, velocity, sprite, layer, name, 
 }
 
 export function removeGameObject(gameObject) {
-    gameObject.parent.children.splice(gameObject.parent.children.indexOf(gameObject), 1);
+    if (gameObject.parent == null)
+        return;
+
+    const index = gameObject.parent.children.indexOf(gameObject)
+
+    if (index == -1)
+        return;
+
+    gameObject.parent.children.splice(index, 1);
     gameObject.colliders.forEach(removeCollider);
     const childs = [];
     gameObject.children.forEach((child) => childs.push(child));
@@ -39,7 +50,9 @@ export function addFrameListener(listener) {
 }
 
 export function removeFrameListener(listener) {
-    frameListeners.splice(frameListeners.indexOf(listener), 1);
+    const index = frameListeners.indexOf(listener);
+    if (index != -1)
+        frameListeners.splice(index, 1);
 }
 
 var lastTimestamp;
@@ -83,3 +96,20 @@ function handlePhysics(gameObject, dt) {
 function handleVelocity(dt, gameObject) {
     gameObject.localTransform.position = gameObject.localTransform.position.somar(gameObject.velocity.multiplicar(dt / 1000));
 }
+
+//GAME STATE HANDLING
+
+export function characterDied() {
+    frameListeners.forEach(removeFrameListener);
+    Array.from(gameObjects).forEach(removeGameObject);
+
+    setTimeout(() => {
+        attackControllerStart();
+        createCharacter();
+        createBackground();
+    }, 1000);
+}
+
+attackControllerStart();
+createCharacter();
+createBackground();
