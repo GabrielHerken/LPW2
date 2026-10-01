@@ -20,7 +20,12 @@ characterSprite.addEventListener('load', () => {
     const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
 
     character = new Entity(createGameObject(new Transform(initialPosition), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
-    character.gameObject.colliders.push(createCircleCollider(Vector2.zero, 32, character.gameObject));
+    character.gameObject.colliders.push(createCircleCollider(Vector2.zero, 32 / 2, character.gameObject));
+
+    character.gameObject.addTag('damageable');
+    character.gameObject.addTag('character');
+
+    character.gameObject.addComponent(Entity, character);
 
     attacks.push(getSwordAttackObject(character.gameObject));
 

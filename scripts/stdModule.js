@@ -30,6 +30,24 @@ export class Transform {
         this.scale = scale;
         this.rotation = rotation;
     }
+
+    returnGlobalTransform(parentTransform) {
+        if (parentTransform == null)
+            return;
+
+        const globalTransform = new Transform();
+        globalTransform.position = new Vector2();
+        globalTransform.position.x = parentTransform.position.x
+                                   + this.position.x * Math.cos(parentTransform.rotation * Math.PI / 180)
+                                   - this.position.y * Math.sin(parentTransform.rotation * Math.PI / 180);
+        globalTransform.position.y = parentTransform.position.y
+                                   + this.position.x * Math.sin(parentTransform.rotation * Math.PI / 180)
+                                   + this.position.y * Math.cos(parentTransform.rotation * Math.PI / 180);
+        globalTransform.rotation = this.rotation + parentTransform.rotation;
+        globalTransform.scale = new Vector2(parentTransform.scale.x * this.scale.x, parentTransform.scale.y * this.scale.y);
+        
+        return globalTransform
+    }
 }
 
 export class GameObject {
@@ -43,28 +61,24 @@ export class GameObject {
         this.parent = parent;
         this.name = name;
         if (parent != null) {
-            this.setGlobalTransform();
+            this.globalTransform = this.localTransform.returnGlobalTransform(this.parent.globalTransform);
         } else {
             this.globalTransform = localTransform;
         }
+        this.tags = [];
+        this.components = {};
     }
 
-    setGlobalTransform() {
-        if (this.parent == null) {
-            return;
-        }
+    addTag(tag) {
+        this.tags.push(tag);
+    }
 
-        const globalTransform = new Transform();
-        globalTransform.position = new Vector2();
-        globalTransform.position.x = this.parent.globalTransform.position.x
-                                   + this.localTransform.position.x * Math.cos(this.parent.globalTransform.rotation * Math.PI / 180)
-                                   - this.localTransform.position.y * Math.sin(this.parent.globalTransform.rotation * Math.PI / 180);
-        globalTransform.position.y = this.parent.globalTransform.position.y
-                                   + this.localTransform.position.x * Math.sin(this.parent.globalTransform.rotation * Math.PI / 180)
-                                   + this.localTransform.position.y * Math.cos(this.parent.globalTransform.rotation * Math.PI / 180);
-        globalTransform.rotation = this.localTransform.rotation + this.parent.globalTransform.rotation;
-        globalTransform.scale = new Vector2(this.parent.globalTransform.scale.x * this.localTransform.scale.x, this.parent.globalTransform.scale.y * this.localTransform.scale.y);
-        this.globalTransform = globalTransform;
+    addComponent(type, component) {
+        this.components[type] = component;
+    }
+
+    getComponent(component) {
+        return this.components[component];
     }
 }
 
@@ -83,11 +97,27 @@ export class Entity {
         this.maxHealth = maxHealth;
         this.health = maxHealth;
     }
+
+    damageCalculation(damage) {
+        return damage;
+    }
+
+    getHit(damage) {
+        this.health -= this.damageCalculation(damage);
+
+        if (this.health <= 0)
+            this.die();
+    }
+
+    die() {
+        throw new Error('Função die não implementada');
+    }
 }
 
 export class CircleCollider {
-    constructor(position, radius, owner) {
-        this.position = position;
+    constructor(localTransform, radius, owner) {
+        this.localTransform = localTransform;
+        this.globalTransform = localTransform.returnGlobalTransform(owner.globalTransform);
         this.radius = radius;
         this.owner = owner
     }

@@ -45,16 +45,28 @@ export function removeFrameListener(listener) {
 var lastTimestamp;
 
 function stepFrame(timestamp) {
+    //DELTA TIME
     if (!lastTimestamp)
         lastTimestamp = timestamp;
 
     var deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
 
+    //EVENT TRIGGERS
     frameListeners.forEach(listener => listener(deltaTime));
 
-    handlePhysics(deltaTime);
+    //FRAME EVENTS
+    gameObjects.forEach(gameObject => {
+        handlePhysics(gameObject, deltaTime);
 
+        if (gameObject.parent != null) {    
+            gameObject.globalTransform = gameObject.localTransform.returnGlobalTransform(gameObject.parent.globalTransform);
+
+            gameObject.colliders.forEach(collider => collider.globalTransform = collider.localTransform.returnGlobalTransform(gameObject.globalTransform));
+        }
+    })
+
+    //RENDERIZATION
     renderFrame();
 
     requestAnimationFrame(stepFrame);
@@ -64,13 +76,8 @@ requestAnimationFrame(stepFrame);
 
 //PHYSICS
 
-function handlePhysics(dt) {
-    gameObjects.forEach(gameObject => {
-        if (gameObject.velocity != Vector2.zero) handleVelocity(dt, gameObject);
-
-        gameObject.setGlobalTransform();
-    });
-    
+function handlePhysics(gameObject, dt) {
+    if (gameObject.velocity != Vector2.zero) handleVelocity(dt, gameObject);
 }
 
 function handleVelocity(dt, gameObject) {
