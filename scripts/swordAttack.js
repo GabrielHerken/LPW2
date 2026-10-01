@@ -57,7 +57,6 @@ function swordAttack(attackObject, direction) {
 
     hitted.forEach(enemy => {
         enemy.getComponent(Entity).getHit(10);
-        console.log(enemy.getComponent(Entity));
     });
 
     setTimeout(() => despawnGO(gameObject), gameObjectDuration * 1000);

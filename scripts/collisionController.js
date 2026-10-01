@@ -2,7 +2,7 @@ import { CircleCollider, GameObject, Transform, Vector2 } from "./stdModule.js";
 import { createGameObject, removeGameObject } from './gameController.js';
 
 const allColiders = [];
-const showColliders = true;
+const showColliders = false;
 const circleColliderSprite = new Image();
 circleColliderSprite.src = './sprites/circleCollider.png';
 

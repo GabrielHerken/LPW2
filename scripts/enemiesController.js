@@ -1,5 +1,5 @@
 import { createCircleCollider } from "./collisionController.js";
-import { createGameObject, removeGameObject } from "./gameController.js";
+import { createGameObject, printGOS, removeGameObject } from "./gameController.js";
 import { Entity, Transform, Vector2 } from "./stdModule.js";
 
 class Enemy {
@@ -24,7 +24,7 @@ function createEnemy(enemy, position) {
 
     enemyGO.addComponent(Entity, newEnemy);
     
-    enemyGO.colliders.push(createCircleCollider(Vector2.zero, 32 / 2, enemyGO));
+    createCircleCollider(Vector2.zero, 32 / 2, enemyGO);
 
     newEnemy.die = () => die(newEnemy);
 
@@ -32,6 +32,7 @@ function createEnemy(enemy, position) {
 }
 
 function die(enemy) {
+    //printGOS();
     removeGameObject(enemy.gameObject);
 }
 
