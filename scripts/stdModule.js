@@ -126,3 +126,13 @@ export class CircleCollider {
         this.owner = owner
     }
 }
+
+export function delay(t, stop=null) {
+    if (stop == null)
+        return new Promise(resolve => setTimeout(resolve, t * 1000));
+
+    return new Promise(resolve => {
+        stop.functions.push(() => resolve(false));
+        setTimeout(() => resolve(true), t * 1000);
+    });
+}

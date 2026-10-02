@@ -2,6 +2,7 @@ import { Vector2, GameObject } from './stdModule.js';
 
 export const canvas = {
     backgroundLayer: {},
+    objectsLayer: {},
     entitiesLayer: {},
     attacksLayer: {},
     overlayLayer: {}
@@ -23,6 +24,7 @@ Object.values(canvas).forEach(ctx => {
 
 const layersToRender = {
     backgroundLayer: [],
+    objectsLayer: [],
     entitiesLayer: [],
     attacksLayer: [],
     overlayLayer: []

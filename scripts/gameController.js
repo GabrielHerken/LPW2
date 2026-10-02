@@ -4,6 +4,7 @@ import { createCharacter } from './characterController.js';
 import { removeCollider } from './collisionController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
 import { Vector2, GameObject, Transform } from './stdModule.js';
+import { stopWaves } from './wavesManager.js';
 
 //GAME OBJECT HANDLING
 
@@ -98,6 +99,7 @@ function handleVelocity(dt, gameObject) {
 //GAME STATE HANDLING
 
 export function characterDied() {
+    stopWaves();
     Array.from(frameListeners).forEach(removeFrameListener);
     Array.from(gameObjects).forEach(removeGameObject);
 

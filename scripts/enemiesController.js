@@ -2,8 +2,9 @@ import { basicEnemyStartAI } from "./basicEnemyAI.js";
 import { createCircleCollider } from "./collisionController.js";
 import { createGameObject, removeGameObject } from "./gameController.js";
 import { Entity, Transform, Vector2 } from "./stdModule.js";
+import { enemyKilled } from "./wavesManager.js";
 
-class Enemy {
+export class Enemy {
     constructor(name, spriteURL, maxHealth, startAI) {
         this.name = name;
         this.sprite = new Image();
@@ -13,11 +14,11 @@ class Enemy {
     }
 }
 
-const enemies = {
+export const enemies = {
     basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 10, basicEnemyStartAI)
 }
 
-function createEnemy(enemy, position) {
+export function createEnemy(enemy, position) {
     const enemyGO = createGameObject(new Transform(position), Vector2.zero, enemy.sprite, 'entitiesLayer', enemy.name);
     const newEnemy = new Entity(enemyGO, enemy.maxHealth);
 
@@ -38,10 +39,6 @@ function die(enemy, endAI) {
     endAI();
 
     removeGameObject(enemy.gameObject);
-}
 
-export function start() {
-    createEnemy(enemies.basicEnemy, new Vector2(100, 30));
-    createEnemy(enemies.basicEnemy, new Vector2(30, 30));
-    createEnemy(enemies.basicEnemy, new Vector2(170, 30));
+    enemyKilled();
 }

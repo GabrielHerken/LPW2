@@ -4,7 +4,7 @@ import { canvas, getMousePosition } from './renderController.js';
 import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
-import { start } from './enemiesController.js';
+import { startWaves } from './wavesManager.js';
 
 //PROPERTIES
 const initialMaxHealth = 50;
@@ -52,7 +52,7 @@ export function createCharacter() {
         document.addEventListener('keyup', keyUpEvent);
         document.addEventListener('click', clickEvent);
 
-        start();
+        startWaves();
     }
 }
 
