@@ -3,6 +3,7 @@ import { createBackground } from './backgroundController.js';
 import { createCamera } from './cameraManager.js';
 import { createCharacter } from './characterController.js';
 import { checkCollision, removeCollider } from './collisionController.js';
+import { resetCash } from './marketController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
 import { Vector2, GameObject, Transform, clamp } from './stdModule.js';
 import { stopWaves } from './wavesManager.js';
@@ -120,6 +121,7 @@ export function characterDied() {
         createCharacter();
         createBackground();
         createCamera();
+        resetCash();
     }, 1000);
 }
 
@@ -127,3 +129,4 @@ attackControllerStart();
 createCharacter();
 createBackground();
 createCamera();
+resetCash();

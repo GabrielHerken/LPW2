@@ -18,6 +18,10 @@ export class Vector2 {
         return new Vector2(this.x / length, this.y / length);
     }
 
+    magnitude() {
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    } 
+
     checkDistance(other, distance) {
         return (other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y) <= distance * distance;
     } 
