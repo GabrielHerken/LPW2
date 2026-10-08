@@ -1,3 +1,4 @@
+import { camera } from './cameraManager.js';
 import { Vector2, GameObject } from './stdModule.js';
 
 export const canvas = {
@@ -35,6 +36,7 @@ const layersToRender = {
 function renderImage(image, transform, ctx) {
     ctx.save();
 
+    ctx.translate(100 - camera.globalTransform.position.x, 100 - camera.globalTransform.position.y);
     ctx.translate(transform.position.x, transform.position.y);
     ctx.rotate((Math.PI / 180) * transform.rotation);
     ctx.scale(transform.scale.x, transform.scale.y)
@@ -66,5 +68,5 @@ export function getMousePosition(e) {
     scaleX = canvas.backgroundLayer.element.width / rect.width,
     scaleY = canvas.backgroundLayer.element.height / rect.height;
 
-  return new Vector2((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY);
+  return new Vector2((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY).somar(camera.globalTransform.position.somar(Vector2.one.multiplicar(-100)));
 }

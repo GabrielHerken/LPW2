@@ -13,12 +13,13 @@ export function createBackground() {
         const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
         const initialVelocity = new Vector2(0, 0);
 
-        background = createGameObject(new Transform(initialPosition), initialVelocity, backgroundSprite, 'backgroundLayer', 'Background');
+        background = createGameObject(new Transform(initialPosition, 0, Vector2.one.multiplicar(2)), initialVelocity, backgroundSprite, 'backgroundLayer', 'Background');
 
-        createWall(new Vector2(100, 200-8), 'Horizontal', 200);
-        createWall(new Vector2(100, 8), 'Horizontal', 200);
-        createWall(new Vector2(8, 100), 'Vertical', 200-16*2);
-        createWall(new Vector2(200-8, 100), 'Vertical', 200-16*2);
+        createWall(new Vector2(100, 292), 'Horizontal', 400);
+        createWall(new Vector2(100, -92), 'Horizontal', 400);
+        createWall(new Vector2(-92, 100), 'Vertical', 400-16*2);
+        createWall(new Vector2(292, 100), 'Vertical', 400-16*2);
+        createWall(new Vector2(58, 120), 'Horizontal', 100-16);
     };
 }
 

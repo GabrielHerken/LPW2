@@ -1,5 +1,6 @@
 import { attackControllerStart } from './attackController.js';
 import { createBackground } from './backgroundController.js';
+import { createCamera } from './cameraManager.js';
 import { createCharacter } from './characterController.js';
 import { checkCollision, removeCollider } from './collisionController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
@@ -15,7 +16,8 @@ export function createGameObject(localTransform, velocity, sprite, layer, name, 
     const newGameObject = new GameObject(sprite, layer, localTransform, velocity, parent, name);
     parent.children.push(newGameObject);
     gameObjects.push(newGameObject);
-    addElementToRender(newGameObject, layer);
+    if (layer != null)
+        addElementToRender(newGameObject, layer);
 
     return newGameObject;
 }
@@ -32,7 +34,8 @@ export function removeGameObject(gameObject) {
     gameObject.parent.children.splice(index, 1);
     Array.from(gameObject.colliders).forEach(removeCollider);
     Array.from(gameObject.children).forEach(removeGameObject);
-    removeElementToRender(gameObject, gameObject.layer);
+    if (gameObject.layer != null)
+        removeElementToRender(gameObject, gameObject.layer);
     gameObjects.splice(gameObjects.indexOf(gameObject), 1);
 }
 
@@ -116,9 +119,11 @@ export function characterDied() {
         attackControllerStart();
         createCharacter();
         createBackground();
+        createCamera();
     }, 1000);
 }
 
 attackControllerStart();
 createCharacter();
 createBackground();
+createCamera();
