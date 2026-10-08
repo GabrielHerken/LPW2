@@ -91,11 +91,11 @@ export function startWaves() {
     wave = 0;
     spawners = [];
     const spawnSpawner = (minX, maxX) => {
-        spawners.push(createGameObject(new Transform(new Vector2(Math.floor(minX + (maxX - minX) * Math.random()), 30)), Vector2.zero, spawnerSprite, 'objectsLayer', 'EnemySpawner'));
+        spawners.push(createGameObject(new Transform(new Vector2(Math.floor(minX + (maxX - minX) * Math.random()), 40)), Vector2.zero, spawnerSprite, 'objectsLayer', 'EnemySpawner'));
     }
 
-    spawnSpawner(16, 84);
-    spawnSpawner(116, 184);
+    spawnSpawner(32, 84);
+    spawnSpawner(116, 168);
 
     nextWave();
 }

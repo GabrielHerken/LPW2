@@ -127,6 +127,16 @@ export class CircleCollider {
     }
 }
 
+export class RectCollider {
+    constructor(localTransform, width, height, owner) {
+        this.localTransform = localTransform;
+        this.globalTransform = localTransform.returnGlobalTransform(owner.globalTransform);
+        this.width = width;
+        this.height = height;
+        this.owner = owner
+    }
+}
+
 export function delay(t, stop=null) {
     if (stop == null)
         return new Promise(resolve => setTimeout(resolve, t * 1000));
@@ -135,4 +145,8 @@ export function delay(t, stop=null) {
         stop.functions.push(() => resolve(false));
         setTimeout(() => resolve(true), t * 1000);
     });
+}
+
+export function clamp(min, max, value) {
+    return Math.min(max, Math.max(min, value));
 }

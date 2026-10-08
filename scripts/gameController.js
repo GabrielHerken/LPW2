@@ -1,9 +1,9 @@
 import { attackControllerStart } from './attackController.js';
 import { createBackground } from './backgroundController.js';
 import { createCharacter } from './characterController.js';
-import { removeCollider } from './collisionController.js';
+import { checkCollision, removeCollider } from './collisionController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
-import { Vector2, GameObject, Transform } from './stdModule.js';
+import { Vector2, GameObject, Transform, clamp } from './stdModule.js';
 import { stopWaves } from './wavesManager.js';
 
 //GAME OBJECT HANDLING
@@ -93,7 +93,16 @@ function handlePhysics(gameObject, dt) {
 }
 
 function handleVelocity(dt, gameObject) {
-    gameObject.localTransform.position = gameObject.localTransform.position.somar(gameObject.velocity.multiplicar(dt / 1000));
+    if (gameObject.colliders.length > 0) {
+        const wallHit = checkCollision(gameObject.colliders[0], ['wall']);
+        if (wallHit.length > 0) {
+            gameObject.localTransform.position = gameObject.localTransform.position.somar((new Vector2(clamp(wallHit[0].globalTransform.position.x - wallHit[0].width / 2, wallHit[0].globalTransform.position.x + wallHit[0].width / 2, gameObject.globalTransform.position.x), clamp(wallHit[0].globalTransform.position.y - wallHit[0].height / 2, wallHit[0].globalTransform.position.y + wallHit[0].height / 2, gameObject.globalTransform.position.y))).somar(gameObject.globalTransform.position.multiplicar(-1)).normalize().multiplicar(-1));
+        } else {
+            gameObject.localTransform.position = gameObject.localTransform.position.somar(gameObject.velocity.multiplicar(dt / 1000));
+        }
+    } else {
+            gameObject.localTransform.position = gameObject.localTransform.position.somar(gameObject.velocity.multiplicar(dt / 1000));
+    }
 }
 
 //GAME STATE HANDLING

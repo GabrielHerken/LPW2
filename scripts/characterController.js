@@ -20,7 +20,7 @@ export function createCharacter() {
     characterSprite.src = './sprites/protagonista.png';
     characterSprite.onload = () => {
         const canvasElement = canvas.entitiesLayer.element;
-        const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+        const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height * 0.75);
 
         character = new Entity(createGameObject(new Transform(initialPosition), Vector2.zero, characterSprite, 'entitiesLayer', 'Personagem'), initialMaxHealth);
         createCircleCollider(Vector2.zero, 32 / 2, character.gameObject);
