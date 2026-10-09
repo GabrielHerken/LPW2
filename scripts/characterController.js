@@ -47,7 +47,7 @@ export function createCharacter() {
 
         const keyDownEvent = e => inputHandler(e, true);
         const keyUpEvent = e => inputHandler(e, false);
-        const clickEvent =  e => tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), 'enemy');
+        const clickEvent =  e => {const mp = getMousePosition(e); if (mp.x >= 0 && mp.x <= canvasElement.width && mp.y >= 0 && mp.y <= canvasElement.height) tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), 'enemy')};
         document.addEventListener('keydown', keyDownEvent);
         document.addEventListener('keyup', keyUpEvent);
         document.addEventListener('click', clickEvent);

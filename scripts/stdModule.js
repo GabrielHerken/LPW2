@@ -141,13 +141,34 @@ export class RectCollider {
     }
 }
 
-export function delay(t, stop=null) {
-    if (stop == null)
-        return new Promise(resolve => setTimeout(resolve, t * 1000));
+const Timer = function(callback, delay) {
+    var timerId, start, remaining = delay;
+
+    this.pause = function() {
+        window.clearTimeout(timerId);
+        timerId = null;
+        remaining -= Date.now() - start;
+    };
+
+    this.resume = function() {
+        if (timerId) {
+            return;
+        }
+
+
+        start = Date.now();
+        timerId = window.setTimeout(callback, remaining);
+    };
+
+    this.resume();
+};
+
+export function delay(t, timers=null) {
+    if (timers == null)
+        return new Promise(resolve => { new Timer(resolve, t * 1000) });
 
     return new Promise(resolve => {
-        stop.functions.push(() => resolve(false));
-        setTimeout(() => resolve(true), t * 1000);
+        timers.functions.push(new Timer(() => resolve(true), t * 1000));
     });
 }
 

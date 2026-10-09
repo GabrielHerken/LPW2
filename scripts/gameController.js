@@ -6,7 +6,7 @@ import { checkCollision, removeCollider } from './collisionController.js';
 import { resetCash } from './marketController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
 import { Vector2, GameObject, Transform, clamp } from './stdModule.js';
-import { stopWaves } from './wavesManager.js';
+import { pauseWaves, resumeWaves, stopWaves } from './wavesManager.js';
 
 //GAME OBJECT HANDLING
 
@@ -47,6 +47,7 @@ export function gameObjectExists(gameObject) {
 //FRAME
 
 const frameListeners = [];
+let paused = false;
 
 export function addFrameListener(listener) {
     frameListeners.push(listener);
@@ -68,24 +69,36 @@ function stepFrame(timestamp) {
     var deltaTime = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
 
-    //EVENT TRIGGERS
-    frameListeners.forEach(listener => listener(deltaTime));
+    if (!paused) {
+        //EVENT TRIGGERS
+        frameListeners.forEach(listener => listener(deltaTime));
 
-    //FRAME EVENTS
-    gameObjects.forEach(gameObject => {
-        handlePhysics(gameObject, deltaTime);
+        //FRAME EVENTS
+        gameObjects.forEach(gameObject => {
+            handlePhysics(gameObject, deltaTime);
 
-        if (gameObject.parent != null) {    
-            gameObject.globalTransform = gameObject.localTransform.returnGlobalTransform(gameObject.parent.globalTransform);
+            if (gameObject.parent != null) {    
+                gameObject.globalTransform = gameObject.localTransform.returnGlobalTransform(gameObject.parent.globalTransform);
 
-            gameObject.colliders.forEach(collider => collider.globalTransform = collider.localTransform.returnGlobalTransform(gameObject.globalTransform));
-        }
-    });
+                gameObject.colliders.forEach(collider => collider.globalTransform = collider.localTransform.returnGlobalTransform(gameObject.globalTransform));
+            }
+        });
 
-    //RENDERIZATION
-    renderFrame();
+        //RENDERIZATION
+        renderFrame();
+    }
 
     requestAnimationFrame(stepFrame);
+}
+
+export function pauseResumeFrames() {
+    paused = !paused;
+
+    if (paused) {
+        pauseWaves();
+    } else {
+        resumeWaves();
+    }
 }
 
 requestAnimationFrame(stepFrame);
