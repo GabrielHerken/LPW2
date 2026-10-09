@@ -3,7 +3,7 @@ import { addFrameListener, createGameObject } from "./gameController.js";
 import { Transform, Vector2 } from "./stdModule.js";
 
 export let camera = null;
-const margin = 40;
+const margin = 70;
 
 export function createCamera() {
     camera = createGameObject(new Transform(Vector2.one.multiplicar(100)), Vector2.zero, null, null, 'Camera');
