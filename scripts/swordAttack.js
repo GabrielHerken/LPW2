@@ -47,17 +47,17 @@ function despawnGO(gameObject) {
     removeGameObject(gameObject);
 }
 
-function swordAttack(attackObject, direction, filter) {
-    const gameObject = spawnGO(attackObject, direction);
+function swordAttack(attackObject, params) {
+    const gameObject = spawnGO(attackObject, params.direction);
 
     const hitted = [];
     gameObject.colliders.forEach(collider => {
-        const collided = checkCollision(collider, filter == '' ? ['damageable'] : ['damageable', filter]);
+        const collided = checkCollision(collider, params.filter == null ? ['damageable'] : ['damageable', params.filter]);
         collided.forEach(collider => {if (hitted.indexOf(collider.owner) == -1) hitted.push(collider.owner)});
     })
 
     hitted.forEach(enemy => {
-        enemy.getComponent(Entity).getHit(damage);
+        enemy.getComponent(Entity).getHit(damage * (params.multiplier == null ? 1 : params.multiplier));
     });
 
     setTimeout(() => despawnGO(gameObject), gameObjectDuration * 1000);

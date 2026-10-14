@@ -5,10 +5,18 @@ import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
 import { startWaves } from './wavesManager.js';
+import { attributes } from './storeManager.js';
 
 //PROPERTIES
 const initialMaxHealth = 50;
-const velocity = 100;
+const initialVelocity = 100;
+const velocityMultiplier = 10.0;
+const forceMultiplier = 5.0;
+const defenseMultiplier = 20.0;
+let velocity = initialVelocity;
+const regenTime = 5;
+const regenFactor = 0.1;
+const regenMultiplier = 0.15;
 
 //CHARACTER CREATION
 
@@ -30,6 +38,11 @@ export function createCharacter() {
 
         character.gameObject.addComponent(Entity, character);
 
+        character.damageCalculation = damage => {
+            character.lastHit = Date.now();
+            return damage * (1 - (attributes.defense - 1) / defenseMultiplier);
+        }
+
         character.die = () => {
             removeFrameListener(repeatOnFrame);
             document.removeEventListener('keydown', keyDownEvent);
@@ -47,7 +60,7 @@ export function createCharacter() {
 
         const keyDownEvent = e => inputHandler(e, true);
         const keyUpEvent = e => inputHandler(e, false);
-        const clickEvent =  e => {const mp = getMousePosition(e); if (mp.x >= 0 && mp.x <= canvasElement.width && mp.y >= 0 && mp.y <= canvasElement.height) tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), 'enemy')};
+        const clickEvent =  e => {const mp = getMousePosition(e); if (mp.x >= 0 && mp.x <= canvasElement.width && mp.y >= 0 && mp.y <= canvasElement.height) tryToAttack(attacks[0], {direction: getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), filter: 'enemy', multiplier: 1 + (attributes.force - 1) / forceMultiplier})};
         document.addEventListener('keydown', keyDownEvent);
         document.addEventListener('keyup', keyUpEvent);
         document.addEventListener('click', clickEvent);
@@ -71,6 +84,11 @@ const inputMapper = {
 }
 
 function repeatOnFrame(deltaTime) {
+    if (character.health < character.maxHealth && Date.now() - character.lastHit >= regenTime * 1000) {
+        character.health = Math.min(character.maxHealth, character.health * (1 + deltaTime / 1000 * regenFactor * (1 + (attributes.regen - 1) / regenMultiplier)));
+    }
+
+    velocity = initialVelocity * (1 + (attributes.velocity - 1) / velocityMultiplier);
     character.gameObject.velocity = input.multiplicar(velocity);
 }
 

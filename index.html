@@ -20,13 +20,12 @@
         <h1>LOJA</h1>
         <div id="atributos">
             <h2>ATRIBUTOS</h2>
-            <p>Pontos: <span>0</span></p>
             <ul>
-                <li><span>Força: </span><div><span>1</span><button type="button">+</button></div></li>
-                <li><span>Velocidade: </span><div><span>1</span><button type="button">+</button></div></li>
-                <li><span>Vida: </span><div><span>1</span><button type="button">+</button></div></li>
-                <li><span>Regeneração: </span><div><span>1</span><button type="button">+</button></div></li>
-                <li><span>Defesa: </span><div><span>1</span><button type="button">+</button></div></li>
+                <li data-attribute="force" data-quantity="1"><span>Força: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
+                <li data-attribute="velocity" data-quantity="1"><span>Velocidade: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
+                <li data-attribute="defense" data-quantity="1"><span>Defesa: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
+                <li data-attribute="life" data-quantity="1"><span>Vida: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
+                <li data-attribute="regen" data-quantity="1"><span>Regeneração: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
             </ul>
         </div>
     </div>
@@ -38,7 +37,6 @@
     <script src="./scripts/backgroundController.js" type="module"></script>
     <script src="./scripts/attackController.js" type="module"></script>
     <script src="./scripts/enemiesController.js" type="module"></script>
-    <script src="./scripts/marketController.js" type="module"></script>
     <script src="./scripts/storeManager.js" type="module"></script>
 </body>
 </html>

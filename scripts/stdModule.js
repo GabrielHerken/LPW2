@@ -120,6 +120,12 @@ export class Entity {
     die() {
         throw new Error('Função die não implementada');
     }
+
+    increaseMaxHealth(additional) {
+        const percentage = this.health / this.maxHealth;
+        this.maxHealth += additional;
+        this.health = percentage * this.maxHealth;
+    }
 }
 
 export class CircleCollider {

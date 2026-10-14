@@ -3,9 +3,9 @@ import { createBackground } from './backgroundController.js';
 import { createCamera } from './cameraManager.js';
 import { createCharacter } from './characterController.js';
 import { checkCollision, removeCollider } from './collisionController.js';
-import { resetCash } from './marketController.js';
 import { renderFrame, addElementToRender, removeElementToRender } from './renderController.js';
 import { Vector2, GameObject, Transform, clamp } from './stdModule.js';
+import { resetStore } from './storeManager.js';
 import { pauseWaves, resumeWaves, stopWaves } from './wavesManager.js';
 
 //GAME OBJECT HANDLING
@@ -134,7 +134,8 @@ export function characterDied() {
         createCharacter();
         createBackground();
         createCamera();
-        resetCash();
+        resetStore();
+
     }, 1000);
 }
 
@@ -142,4 +143,4 @@ attackControllerStart();
 createCharacter();
 createBackground();
 createCamera();
-resetCash();
+resetStore();

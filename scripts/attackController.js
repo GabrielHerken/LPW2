@@ -3,11 +3,11 @@ import { Vector2 } from "./stdModule.js";
 
 const attacksInCooldown = [];
 
-export function tryToAttack(attack, direction, filter='') {
+export function tryToAttack(attack, params) {
     if (attack.currentCooldown <= 0) {
         attack.currentCooldown = attack.maxCooldown;
         attacksInCooldown.push(attack);
-        attack.attackEffect(attack, direction, filter);
+        attack.attackEffect(attack, params);
     }
 }
 

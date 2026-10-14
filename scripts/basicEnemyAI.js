@@ -28,7 +28,7 @@ function everyFrame(gameObject, attacks, dt) {
 
     //ATTACKING
     if (gameObject.globalTransform.position.checkDistance(mainCharacter.gameObject.globalTransform.position, 40)) {
-        tryToAttack(attacks[0], mainCharacter.gameObject.globalTransform.position.somar(gameObject.globalTransform.position.multiplicar(-1)).normalize(), 'character');
+        tryToAttack(attacks[0], {direction: mainCharacter.gameObject.globalTransform.position.somar(gameObject.globalTransform.position.multiplicar(-1)).normalize(), filter: 'character'});
     }
 }
 

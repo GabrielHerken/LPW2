@@ -76,7 +76,7 @@ canvas {
 #atributos {
     margin-left: 2.5rem;
     display: grid;
-    grid-template-rows: 1.5rem 1rem 1fr;
+    grid-template-rows: 1.5rem 1fr;
 
     h2 {
         margin: 0;
@@ -106,9 +106,11 @@ canvas {
             list-style-type: none;
             display: flex;
             justify-content: space-between;
+            min-width: max-content;
 
-            span {
-              font-size: 1.5rem;
+            font-size: 1.5rem;
+            > span span {
+                font-weight: 900;
             }
 
             div {
