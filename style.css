@@ -1,5 +1,5 @@
 body {
-    background-color: #042033;
+    background-color: #071B2B;
 }
 
 canvas {
@@ -8,4 +8,201 @@ canvas {
     left: calc(50% - 90vh / 2);
     top: calc(50% - 90vh / 2);
     image-rendering: pixelated;
+}
+
+button {
+    background-color: #43C6AC;
+    color: #071B2B;
+    font-size: 15px;
+    border: 1px solid #D9B56D;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    background-color: #176B70;
+    color: #EAF4F4;
+}
+
+.area-usuario {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 12px;
+}
+
+#botao-iniciar-sessao {
+    background-color: #43C6AC;
+    color: #071B2B;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 25px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#botao-iniciar-sessao:hover {
+    background-color: #176B70;
+    color: #EAF4F4;
+}
+
+#janela-login {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    padding: 32px;
+    background-color: #103B4A;
+    color: #EAF4F4;
+    border: 1px solid #D9B56D;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px #00000066;
+}
+
+#janela-login::backdrop {
+    background-color: rgba(0, 10, 20, 0.75);
+    backdrop-filter: blur(3px);
+}
+
+#titulo {
+    margin-top: 0;
+    margin-bottom: 28px;
+    font-size: 27px;
+    color: #43C6AC;
+}
+
+#botao-fecha-login {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #EAF4F4;
+    border: none;
+    font-size: 18px;
+}
+
+#botao-fecha-login:hover {
+    color: #43C6AC;
+    background-color: transparent;
+    transform: none;
+}
+
+#janela-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#janela-login input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    background-color: #071B2B;
+    color: #EAF4F4;
+    border: 1px solid #176B70;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#janela-login input::placeholder {
+    color: #A9C5CC;
+    opacity: 1;
+}
+
+#janela-login input:focus {
+    border-color: #43C6AC;
+    box-shadow: 0 0 0 2px #43C6AC44;
+}
+
+#logar {
+    background-color: #D9B56D;
+    color: #071B2B;
+    border: none;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 4px;
+}
+
+#logar:hover {
+    background-color: #EAD29A;
+    color: #071B2B;
+}
+
+#texto-conta {
+    font-size: 14px;
+    font-weight: normal;
+    color: #A9C5CC;
+    margin: 12px 0 0;
+}
+
+#criar-conta {
+    align-self: flex-start;
+    background-color: transparent;
+    color: #43C6AC;
+    border: none;
+    padding: 4px 0;
+}
+
+#criar-conta:hover {
+    color: #D9B56D;
+    text-decoration: underline;
+    transform: none;
+}
+
+#login-errado {
+    color: #FF9999;
+    font-size: 14px;
+}
+
+#conta-criada {
+    color: #7FE0B5;
+    font-size: 14px;
+}
+
+#login-valido {
+    color: #43C6AC;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+}
+
+#usuario-logado {
+    display: none;
+    align-items: center;
+    gap: 12px;
+}
+
+#foto-perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #176B70;
+    border: 2px solid #D9B56D;
+    font-size: 23px;
+    color: #43C6AC;
+    font-family: Arial, sans-serif;
+}
+
+#botao-sair {
+    background-color: transparent;
+    color: #EAF4F4;
+    border: 1px solid #176B70;
+    border-radius: 12px;
+    padding: 9px 14px;
+    cursor: pointer;
+}
+
+#botao-sair:hover {
+    background-color: #103B4A;
+    border-color: #D9B56D;
 }

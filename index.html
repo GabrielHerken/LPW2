@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,41 @@
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./sprites/favicon.png" type="image/x-icon">
 </head>
+
 <body>
+
+    <div class="area-usuario">
+        <button id="botao-iniciar-sessao">Iniciar sessão</button>
+
+        <div id="usuario-logado">
+            <div id="foto-perfil"></div>
+            <p id="login-valido"></p>
+            <button id="botao-sair">Sair</button>
+        </div>
+    </div>
+
+    <dialog id="janela-login">
+        <p id="login-errado">Nome de usuário ou senha inválidos</p>
+        <p id="conta-criada"></p>
+        <h2 id="titulo">Entrar</h2>
+        <button id="botao-fecha-login">X</button>
+        <form>
+            <input type="text" placeholder="Nome de usuário" id="login-nome" required>
+            <input type="password" placeholder="Senha" id="login-senha" required>
+            <button type="submit" id="logar">Entrar</button>
+            <h3 id="texto-conta">Não possui uma conta?</h3>
+            <button type="button" id="criar-conta">Crie agora</button>
+        </form>
+    </dialog>
+
     <canvas width="200" height="200" id="backgroundLayer"></canvas>
     <canvas width="200" height="200" id="entitiesLayer"></canvas>
+    <script src="scripts/janelaLogin.js"></script>
     <script src="./scripts/stdModule.js" type="module"></script>
     <script src="./scripts/renderController.js" type="module"></script>
     <script src="./scripts/characterController.js" type="module"></script>
     <script src="./scripts/backgroundController.js" type="module"></script>
     <script src="./scripts/gameController.js" type="module"></script>
 </body>
+
 </html>
