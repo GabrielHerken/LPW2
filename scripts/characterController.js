@@ -6,6 +6,7 @@ import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
 import { startWaves } from './wavesManager.js';
 import { attributes } from './storeManager.js';
+import { getBowAttackObject } from './bowAttack.js';
 
 //PROPERTIES
 const initialMaxHealth = 50;
@@ -72,6 +73,11 @@ export function createCharacter() {
 //ATTACKS
 
 let attacks = [];
+const attackObjects = { sword: getSwordAttackObject, bow: getBowAttackObject };
+
+export function setAttack(arma) {
+    attacks[0] = attackObjects[arma](character.gameObject);
+}
 
 //INPUTS
 

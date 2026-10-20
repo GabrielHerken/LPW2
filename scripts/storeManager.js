@@ -1,4 +1,4 @@
-import { character } from "./characterController.js";
+import { character, setAttack } from "./characterController.js";
 import { pauseResumeFrames } from "./gameController.js";
 
 const storeButton = document.getElementById('store-button');
@@ -28,6 +28,19 @@ document.querySelectorAll('#atributos button').forEach(button => {
 
             if (button.parentElement.parentElement.dataset.attribute == 'life')
                 character.increaseMaxHealth(5); //Vida a mais
+        }
+    });
+});
+
+document.querySelectorAll('#armas li').forEach(li => {
+    li.addEventListener('click', () => {
+        const price = li.dataset.price;
+
+        if (price <= currentCash) {
+            addCash(-price);
+            li.style.opacity = '0';
+
+            setAttack(li.dataset.arma);
         }
     });
 });

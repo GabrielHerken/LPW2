@@ -39,6 +39,7 @@ canvas {
     display: grid;
     grid-template-rows: 6rem 1fr;
     grid-template-columns: .75fr 1fr 1fr;
+    gap: 2rem;
 
     h1 {
         margin: 0;
@@ -85,14 +86,6 @@ canvas {
         font-family: Arial, Helvetica, sans-serif;
     }
 
-    p {
-        margin: 0;
-        text-align: center;
-        font-size: 1rem;
-        font-family: Arial, Helvetica, sans-serif;
-        margin-top: .5rem;
-    }
-
     ul {
         padding: 0;
         margin: 0;
@@ -135,6 +128,85 @@ canvas {
                     opacity: .8;
                 }
             }
+        }
+    }
+}
+
+#armas {
+    display: grid;
+    grid-template-rows: 1.5rem 1fr;
+
+    h2 {
+        margin: 0;
+        text-align: center;
+        font-size: 1.5rem;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        margin-top: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        color: #FFFCE6;
+
+        li {
+            position: relative;
+            background-color: #05133a;
+            list-style-type: none;
+            display: grid;
+            grid-template-columns: 1fr 5rem 20%;
+            grid-template-rows: 2rem 1fr;
+            grid-template-areas: "titulo preco imagem"
+                                 "paragrafo paragrafo imagem";
+            row-gap: 2rem;
+            border-radius: 10px;
+            padding-right: 1rem;
+            transition: all 100ms;
+
+            h3 {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                grid-area: titulo;
+                margin-top: 1rem;
+                margin-left: 1rem;
+                font-size: 1.5rem;
+            }
+
+            p {
+                grid-area: paragrafo;
+                margin: 0;
+                margin-left: 1rem;
+                margin-bottom: 1rem;
+                font-size: 1.15rem;
+            }
+
+            img {
+                box-sizing: border-box;
+                grid-area: imagem;
+                width: 100%;
+                align-self: center;
+                padding: 5%;
+                border-radius: 10px;
+                background-color: #FFFCE6;
+            }
+
+            span {
+                grid-area: preco;
+                text-align: right;
+                margin-top: 1rem;
+                margin-right: 1rem;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.5rem;
+            }
+        }
+
+        li:hover {
+            cursor: pointer;
+            box-shadow: 0 0 10px hsla(307, 100%, 9%, 0.753);
+            transform: scale(1.1);
         }
     }
 }
