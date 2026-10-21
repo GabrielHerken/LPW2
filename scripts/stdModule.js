@@ -147,6 +147,8 @@ export class Ability {
         this.spriteURL = spriteURL;
         this.description = description;
     }
+
+    register() {}
 }
 
 export function delay(t, stop=null) {

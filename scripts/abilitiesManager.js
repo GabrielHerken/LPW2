@@ -5,8 +5,8 @@ const abilitiesCard = document.querySelectorAll('#abilities li');
 
 const abilities = [thornsAbilityOBJ];
 
-function selectUpgrade() {
-    
+function selectUpgrade(ability) {
+    abilitiesManager.addAbility(ability);
 }
 
 export function newUpgrades() {
@@ -20,7 +20,7 @@ export function newUpgrades() {
             card.querySelector('p').innerHTML = ability.description;
 
             card.addEventListener('click', function t() {
-                selectUpgrade();
+                selectUpgrade(ability);
 
                 abilitiesSelector.classList.add('hide');
 
@@ -58,3 +58,48 @@ abilitiesCard.forEach(card => {
         })
     })
 });
+
+class AbilitiesManager {
+    constructor() {
+        this.Abilities = new Map();
+        this.Events = new Map();
+    }
+
+    addAbility(ability) {
+        if (this.Abilities.has(ability.title)) return false;
+
+        this.Abilities.set(abilities.title, ability.register());
+    }
+
+    removeAbility(ability) {
+        if (!this.Abilities.has(ability.title)) return false;
+
+        const unregister = this.Abilities.get(ability.title);
+        this.Abilities.delete(abilitiy.title);
+        unregister();
+    }
+
+    registerToEvent(event, callback) {
+        if (!this.Events.has(event)) {
+            this.Events.set(event, new Set());
+        }
+
+        this.Events.get(event).add(callback);
+
+        return () => {
+            this.Events.get(event).delete(callback);
+
+            if (this.Events.get(event).size == 0) {
+                this.Events.delete(event);
+            }
+        };
+    }
+
+    fireEvent(event, args) {
+        if (this.Events.has(event)) {
+            this.Events.get(event).forEach(callback => callback(args));
+        }
+    }
+}
+
+export const abilitiesManager = new AbilitiesManager();

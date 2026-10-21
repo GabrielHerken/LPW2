@@ -1,3 +1,4 @@
+import { abilitiesManager } from "./abilitiesManager.js";
 import { checkCollision, createCircleCollider } from "./collisionController.js";
 import { createGameObject, gameObjectExists, removeGameObject } from "./gameController.js";
 import { Attack, Entity, Transform, Vector2 } from "./stdModule.js";
@@ -58,6 +59,7 @@ function swordAttack(attackObject, direction, filter) {
 
     hitted.forEach(enemy => {
         enemy.getComponent(Entity).getHit(damage);
+        abilitiesManager.fireEvent('combat:hit', { owner: attackObject.owner.getComponent(Entity) });
     });
 
     setTimeout(() => despawnGO(gameObject), gameObjectDuration * 1000);
