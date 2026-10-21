@@ -1,6 +1,7 @@
 import { createEnemy, enemies } from "./enemiesController.js";
 import { createGameObject } from "./gameController.js";
 import { delay, Transform, Vector2 } from "./stdModule.js";
+import { refreshStore } from "./storeManager.js";
 
 class WaveBurst {
     constructor(type, quantity, interval) {
@@ -116,6 +117,7 @@ export function enemyKilled() {
 
         if (wave < waves.length) {
             nextWave();
+            refreshStore();
         } else {
             console.log('cabô');
         }

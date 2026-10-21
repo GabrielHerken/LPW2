@@ -1,6 +1,6 @@
 import { checkCollision, createCircleCollider } from "./collisionController.js";
 import { createGameObject, gameObjectExists, removeGameObject } from "./gameController.js";
-import { Attack, Entity, Transform, Vector2 } from "./stdModule.js";
+import { Attack, Entity, Transform, Vector2, Weapon } from "./stdModule.js";
 
 //PROPERTIES
 
@@ -27,6 +27,10 @@ const colliders = [
 
 export function getSwordAttackObject(owner) {
     return new Attack(owner, swordAttack, maxCooldown);
+}
+
+export function getSwordWeaponObject() {
+    return new Weapon('Espada', './sprites/espada.png', 'Ataca em uma região à sua frente, em curta distância', 15, 'sword');
 }
 
 //ATTACK EFFECT

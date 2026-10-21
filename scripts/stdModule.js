@@ -147,6 +147,16 @@ export class RectCollider {
     }
 }
 
+export class Weapon {
+    constructor(title, sprite, description, price, weaponName) {
+        this.title = title;
+        this.sprite = sprite;
+        this.description = description;
+        this.price = price;
+        this.weaponName = weaponName;
+    }
+}
+
 const Timer = function(callback, delay) {
     var timerId, start, remaining = delay;
 

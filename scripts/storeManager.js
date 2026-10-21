@@ -1,9 +1,13 @@
 import { character, setAttack } from "./characterController.js";
 import { pauseResumeFrames } from "./gameController.js";
+import { getBowWeaponObject as bowWeapon } from "./bowAttack.js";
+import { getSwordWeaponObject as swordWeapon } from "./swordAttack.js";
 
 const storeButton = document.getElementById('store-button');
 const store = document.getElementById('store');
 const cashP = document.getElementById('cash');
+const armasLi = document.querySelectorAll('#armas li')
+const todasArmas = [bowWeapon, swordWeapon];
 let currentCash = 0;
 
 export let attributes = { force: 1, velocity: 1, defense: 1, life: 1, regen: 1 };
@@ -32,7 +36,7 @@ document.querySelectorAll('#atributos button').forEach(button => {
     });
 });
 
-document.querySelectorAll('#armas li').forEach(li => {
+armasLi.forEach(li => {
     li.addEventListener('click', () => {
         const price = li.dataset.price;
 
@@ -61,4 +65,21 @@ export function resetStore() {
     });
 
     attributes = { force: 1, velocity: 1, defense: 1, life: 1, regen: 1 };
+
+    refreshStore();
+}
+
+export function refreshStore() {
+    armasLi.forEach(armaEl => {
+        armaEl.style.opacity = '1';
+
+        const arma = todasArmas[Math.floor(Math.random() * todasArmas.length)]();
+
+        armaEl.querySelector('h3').innerHTML = arma.title;
+        armaEl.querySelector('span').innerHTML = '$' + arma.price;
+        armaEl.querySelector('img').src = arma.sprite;
+        armaEl.querySelector('p').innerHTML = arma.description;
+        armaEl.dataset.arma = arma.weaponName;
+        armaEl.dataset.price = arma.price;
+    });
 }

@@ -1,6 +1,6 @@
 import { checkCollision, createCircleCollider } from "./collisionController.js";
 import { createGameObject, gameObjectExists, removeGameObject } from "./gameController.js";
-import { Attack, Entity, Transform, Vector2 } from "./stdModule.js";
+import { Attack, Entity, Transform, Vector2, Weapon } from "./stdModule.js";
 
 //PROPERTIES
 
@@ -27,6 +27,10 @@ const colliders = [
 
 export function getBowAttackObject(owner) {
     return new Attack(owner, bowAttack, maxCooldown);
+}
+
+export function getBowWeaponObject() {
+    return new Weapon('Arco', './sprites/arco.png', 'Atira flechas a distância', 30, 'bow');
 }
 
 //ATTACK EFFECT
