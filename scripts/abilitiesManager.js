@@ -1,9 +1,34 @@
+import { abilityOBJ as thornsAbilityOBJ } from "./thornsAbility.js";
+
 const abilitiesSelector = document.getElementById('abilities');
 const abilitiesCard = document.querySelectorAll('#abilities li');
+
+const abilities = [thornsAbilityOBJ];
+
+function selectUpgrade() {
+    
+}
 
 export function newUpgrades() {
     return new Promise(res => {
         abilitiesSelector.classList.remove('hide');
+
+        abilitiesCard.forEach(card => {
+            const ability = abilities[Math.floor(Math.random() * abilities.length)];
+            card.querySelector('h2').innerHTML = ability.title;
+            card.querySelector('img').src = ability.spriteURL;
+            card.querySelector('p').innerHTML = ability.description;
+
+            card.addEventListener('click', function t() {
+                selectUpgrade();
+
+                abilitiesSelector.classList.add('hide');
+
+                abilitiesCard.forEach(c => c.removeEventListener('click', t));
+
+                res();
+            });
+        });
     });
 }
 

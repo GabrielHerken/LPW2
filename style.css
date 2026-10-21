@@ -75,7 +75,7 @@ canvas {
                 margin-bottom: 1rem;
                 align-self: center;
                 width: 100%;
-                max-width: 20vh;
+                image-rendering: pixelated;
             }
 
             p {

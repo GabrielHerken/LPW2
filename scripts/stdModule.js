@@ -141,6 +141,14 @@ export class RectCollider {
     }
 }
 
+export class Ability {
+    constructor(title, spriteURL, description) {
+        this.title = title;
+        this.spriteURL = spriteURL;
+        this.description = description;
+    }
+}
+
 export function delay(t, stop=null) {
     if (stop == null)
         return new Promise(resolve => setTimeout(resolve, t * 1000));

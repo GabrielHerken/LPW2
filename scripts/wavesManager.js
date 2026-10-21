@@ -30,6 +30,9 @@ const waves = [
     ]),
     new Wave([
         new WaveBurst(enemies.basicEnemy, 20, .5)
+    ]),
+    new Wave([
+        new WaveBurst(enemies.basicEnemy, 40, .2)
     ])
 ];
 
@@ -62,6 +65,8 @@ function nextWave() {
 
             wavesUntilAbilities = WAVES_PER_ABILITY;
         }
+        
+        wavesUntilAbilities--;
 
         for (let i=0; i<waves[wave].bursts.length; i++) {
             const burst = waves[wave].bursts[i];
@@ -79,8 +84,6 @@ function nextWave() {
             if (toStop) break;
         }
     })();
-
-    wavesUntilAbilities--;
 }
 
 async function spawnBurst(burst) {
