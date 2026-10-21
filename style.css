@@ -43,13 +43,14 @@ canvas {
     h1 {
         font-family: Arial, Helvetica, sans-serif;
         color: #fff;
-        font-size: 7rem;
+        font-size: 3rem;
     }
 
     ul {
         display: flex;
         justify-content: space-between;
-        width: 60%;
+        width: 80%;
+        --FOV: 53deg;
 
         li {
             list-style-type: none;
@@ -72,6 +73,9 @@ canvas {
             img {
                 margin-top: 1rem;
                 margin-bottom: 1rem;
+                align-self: center;
+                width: 100%;
+                max-width: 20vh;
             }
 
             p {
@@ -83,15 +87,17 @@ canvas {
 
         li:hover {
             cursor: pointer;
-            transform: scale(1.1);
             box-shadow: 0 0 100px #FFFCE6;
+            transform-style: preserve-3d;
+            transform: scale(1.1) perspective(calc(0.9 * 50vw / tan(var(--FOV) / 2)));
         }
 
     }
 
     ul:has(li:hover) li:not(:hover) {
         box-shadow: 0 0 0px;
-        transform: scale(0.75);
+        transform-style: preserve-3d;
+        transform: scale(0.75) perspective(calc((4 / 3) * 50vw / tan(var(--FOV) / 2)));
         filter: brightness(.5);
     }
 }
