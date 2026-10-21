@@ -1,7 +1,7 @@
 import { character } from "./characterController.js";
 import { addFrameListener, createGameObject, removeFrameListener, removeGameObject } from "./gameController.js";
-import { addCash } from "./marketController.js";
 import { Transform, Vector2 } from "./stdModule.js";
+import { addCash } from "./storeManager.js";
 
 const cashSprite = new Image();
 cashSprite.src = './sprites/cashDrop.png';
