@@ -1,3 +1,4 @@
+import { abilitiesManager } from './abilitiesManager.js';
 import { attackControllerStart } from './attackController.js';
 import { createBackground } from './backgroundController.js';
 import { createCamera } from './cameraManager.js';
@@ -122,6 +123,7 @@ export function characterDied() {
         createBackground();
         createCamera();
         resetCash();
+        abilitiesManager.clearAbilitiesManager();
     }, 1000);
 }
 
@@ -129,4 +131,3 @@ attackControllerStart();
 createCharacter();
 createBackground();
 createCamera();
-resetCash();

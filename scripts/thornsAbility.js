@@ -7,7 +7,8 @@ export const abilityOBJ = new Ability('Espinhos', './sprites/thorns.png', 'Toda 
 abilityOBJ.register = () => {
     const unregister = abilitiesManager.registerToEvent('combat:hit', args => {
         if (args.owner != character) {
-            args.owner.getHit(10);
+            args.owner.getHit({ owner: character, damage: 10 });
+            abilitiesManager.fireEvent('combat:hit', { owner: character });
         }
     });
 

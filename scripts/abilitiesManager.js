@@ -1,9 +1,11 @@
 import { abilityOBJ as thornsAbilityOBJ } from "./thornsAbility.js";
+import { abilityOBJ as berserkerAbilityOBJ} from "./berserkerAbility.js";
+import { abilityOBJ as bloodthirstAbilityOBJ} from "./bloodthirstAbility.js";
 
 const abilitiesSelector = document.getElementById('abilities');
 const abilitiesCard = document.querySelectorAll('#abilities li');
 
-const abilities = [thornsAbilityOBJ];
+const abilities = [thornsAbilityOBJ, berserkerAbilityOBJ, bloodthirstAbilityOBJ];
 
 function selectUpgrade(ability) {
     abilitiesManager.addAbility(ability);
@@ -13,21 +15,27 @@ export function newUpgrades() {
     return new Promise(res => {
         abilitiesSelector.classList.remove('hide');
 
+        const listeners = [];
         abilitiesCard.forEach(card => {
             const ability = abilities[Math.floor(Math.random() * abilities.length)];
             card.querySelector('h2').innerHTML = ability.title;
             card.querySelector('img').src = ability.spriteURL;
             card.querySelector('p').innerHTML = ability.description;
 
-            card.addEventListener('click', function t() {
+            const tempFunc = () => {
                 selectUpgrade(ability);
 
                 abilitiesSelector.classList.add('hide');
 
-                abilitiesCard.forEach(c => c.removeEventListener('click', t));
+                abilitiesCard.forEach((c, key) => {
+                    c.removeEventListener('click', listeners[key]);
+                });
 
                 res();
-            });
+            }
+
+            listeners.push(tempFunc);
+            card.addEventListener('click', tempFunc);
         });
     });
 }
@@ -63,20 +71,14 @@ class AbilitiesManager {
     constructor() {
         this.Abilities = new Map();
         this.Events = new Map();
+        this.Attributes = new Map();
+        this.Schedulers = new Set();
     }
 
     addAbility(ability) {
         if (this.Abilities.has(ability.title)) return false;
 
-        this.Abilities.set(abilities.title, ability.register());
-    }
-
-    removeAbility(ability) {
-        if (!this.Abilities.has(ability.title)) return false;
-
-        const unregister = this.Abilities.get(ability.title);
-        this.Abilities.delete(abilitiy.title);
-        unregister();
+        this.Abilities.set(ability.title, ability.register(ability));
     }
 
     registerToEvent(event, callback) {
@@ -99,6 +101,90 @@ class AbilitiesManager {
         if (this.Events.has(event)) {
             this.Events.get(event).forEach(callback => callback(args));
         }
+    }
+
+    getAttribute(attributeName, initialValue, params) {
+        if (!this.Attributes.has(attributeName)) return initialValue;
+
+        let newValue = initialValue;
+        this.Attributes.get(attributeName).forEach(({priority, func}) => {
+            newValue = func(newValue, params);
+        });
+
+        return newValue;
+    }
+
+    registerAttribute(attributeName, priority, func) {
+        if (!this.Attributes.has(attributeName)) {
+            this.Attributes.set(attributeName, new Set());
+        }
+
+        const obj = {priority: priority, func: func};
+        const newArr = Array.from(this.Attributes.get(attributeName));
+        newArr.push(obj);
+        newArr.sort((a, b) => b.priority - a.priority);
+        this.Attributes.set(attributeName, new Set(newArr));
+
+        return () => {
+            this.Attributes.get(attributeName).delete(obj);
+
+            if (this.Attributes.get(attributeName).size == 0) {
+                this.Attributes.delete(attributeName);
+            }
+        };
+    }
+
+    createScheduler(time, callback) {
+        const mutatedCallback = () => {
+            this.Schedulers.delete(scheduler);
+
+            callback();
+        }
+        const timerID = setTimeout(mutatedCallback, time);
+        const scheduler = { id: timerID, playing: true, remainingTime: time, startTime: Date.now(), callback: mutatedCallback };
+
+        this.Schedulers.add(scheduler);
+
+        return scheduler;
+    }
+
+    stopScheduler(scheduler) {
+        this.Schedulers.delete(scheduler);
+        clearTimeout(scheduler.id);
+    }
+
+    pauseSchedulers() {
+        this.Schedulers.forEach(scheduler => {
+            if (scheduler.playing == true) {
+                clearTimeout(scheduler.id);
+                scheduler.remainingTime -= Date.now() - scheduler.startTime;
+                scheduler.playing = false;
+            }
+        });
+    }
+
+    resumeSchedulers() {
+        this.Schedulers.forEach(scheduler => {
+            if (scheduler.playing == false) {
+                setTimeout(scheduler.callback, scheduler.remainingTime);
+                scheduler.playing = true;
+            }
+        });
+    }
+
+    //USAR pauseSchedulers E resumeSchedulers QUANDO ABRIR A LOJA
+
+    clearAbilitiesManager() {
+        this.Schedulers.forEach(scheduler => {
+            clearTimeout(scheduler.id);
+        });
+
+        this.Abilities.forEach((unsubscribe, key_) => unsubscribe())
+
+        this.Schedulers.clear();
+        this.Events.clear();
+        this.Attributes.clear();
+        this.Abilities.clear();
     }
 }
 

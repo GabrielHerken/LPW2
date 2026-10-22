@@ -58,7 +58,7 @@ function swordAttack(attackObject, direction, filter) {
     })
 
     hitted.forEach(enemy => {
-        enemy.getComponent(Entity).getHit(damage);
+        enemy.getComponent(Entity).getHit({ owner: attackObject.owner.getComponent(Entity), damage: damage });
         abilitiesManager.fireEvent('combat:hit', { owner: attackObject.owner.getComponent(Entity) });
     });
 

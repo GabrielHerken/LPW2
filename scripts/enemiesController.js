@@ -1,3 +1,4 @@
+import { abilitiesManager } from "./abilitiesManager.js";
 import { basicEnemyStartAI } from "./basicEnemyAI.js";
 import { createCircleCollider } from "./collisionController.js";
 import { createDrop } from "./dropManager.js";
@@ -33,17 +34,19 @@ export function createEnemy(enemy, position) {
     createCircleCollider(Vector2.zero, 32 / 2, enemyGO);
 
     const endAI = enemy.startAI(newEnemy);
-    newEnemy.die = () => die(newEnemy, endAI, enemy);
+    newEnemy.die = params => die(params, newEnemy, endAI, enemy);
 
     return newEnemy;
 }
 
-function die(enemy, endAI, enemyObj) {
+function die(params, enemy, endAI, enemyObj) {
     endAI();
 
     createDrop(enemy.gameObject.globalTransform.position, 'cash', Math.round(enemyObj.minCash + Math.random() * (enemyObj.maxCash - enemyObj.minCash)));
     
     removeGameObject(enemy.gameObject);
+
+    abilitiesManager.fireEvent('combat:kill', { killer: params.owner });
 
     enemyKilled();
 }

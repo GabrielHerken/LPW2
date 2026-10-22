@@ -5,6 +5,7 @@ import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
 import { startWaves } from './wavesManager.js';
+import { abilitiesManager } from './abilitiesManager.js';
 
 //PROPERTIES
 const initialMaxHealth = 50;
@@ -30,7 +31,7 @@ export function createCharacter() {
 
         character.gameObject.addComponent(Entity, character);
 
-        character.die = () => {
+        character.die = params => {
             removeFrameListener(repeatOnFrame);
             document.removeEventListener('keydown', keyDownEvent);
             document.removeEventListener('keyup', keyUpEvent);
@@ -71,7 +72,7 @@ const inputMapper = {
 }
 
 function repeatOnFrame(deltaTime) {
-    character.gameObject.velocity = input.multiplicar(velocity);
+    character.gameObject.velocity = input.multiplicar(abilitiesManager.getAttribute('velocity', velocity, {owner: character}));
 }
 
 function inputHandler(e, down) {
