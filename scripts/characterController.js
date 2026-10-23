@@ -40,8 +40,9 @@ export function createCharacter() {
 
         character.gameObject.addComponent(Entity, character);
 
+        character.lastHit = regenTime * 1000;
         character.damageCalculation = damage => {
-            character.lastHit = Date.now();
+            character.lastHit = 0;
             return damage * (1 - (attributes.defense - 1) / defenseMultiplier);
         }
         
@@ -93,9 +94,15 @@ const inputMapper = {
 function repeatOnFrame(deltaTime) {
     character.gameObject.velocity = input.multiplicar(abilitiesManager.getAttribute('velocity', initialVelocity * (1 + (attributes.velocity - 1) / velocityMultiplier), {owner: character}));
 
-    if (character.health < character.maxHealth && Date.now() - character.lastHit >= regenTime * 1000) {
+    
+    console.log(character.lastHit);
+    if (character.health < character.maxHealth && character.lastHit == regenTime * 1000) {
         character.health = Math.min(character.maxHealth, character.health * (1 + deltaTime / 1000 * regenFactor * (1 + (attributes.regen - 1) / regenMultiplier)));
+    } else if (character.lastHit < regenTime * 1000) {
+        character.lastHit = Math.min(regenTime * 1000, character.lastHit + deltaTime);
     }
+
+    //CONSERTAR REGEN
 }
 
 function inputHandler(e, down) {

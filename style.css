@@ -103,7 +103,6 @@ canvas {
 
 .hide {
     display: none !important;
-    }
 }
 
 #store {
@@ -129,10 +128,6 @@ canvas {
         font-family: Arial, Helvetica, sans-serif;
         grid-column: 1 / 4;
     }
-}
-
-.hided {
-    display: none !important;
 }
 
 #store-button {

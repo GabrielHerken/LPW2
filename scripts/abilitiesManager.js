@@ -1,6 +1,7 @@
 import { abilityOBJ as thornsAbilityOBJ } from "./thornsAbility.js";
 import { abilityOBJ as berserkerAbilityOBJ} from "./berserkerAbility.js";
 import { abilityOBJ as bloodthirstAbilityOBJ} from "./bloodthirstAbility.js";
+import { pauseResumeFrames } from "./gameController.js";
 
 const abilitiesSelector = document.getElementById('abilities');
 const abilitiesCard = document.querySelectorAll('#abilities li');
@@ -10,10 +11,14 @@ const abilities = [thornsAbilityOBJ, berserkerAbilityOBJ, bloodthirstAbilityOBJ]
 function selectUpgrade(ability) {
     abilitiesManager.addAbility(ability);
     abilitiesManager.resumeSchedulers();
+    pauseResumeFrames();
+    document.getElementById('store-button').classList.toggle('hide');
 }
 
 export function newUpgrades() {
     abilitiesManager.pauseSchedulers();
+    pauseResumeFrames();
+    document.getElementById('store-button').classList.toggle('hide');
 
     return new Promise(res => {
         abilitiesSelector.classList.remove('hide');
@@ -169,13 +174,12 @@ class AbilitiesManager {
     resumeSchedulers() {
         this.Schedulers.forEach(scheduler => {
             if (scheduler.playing == false) {
-                setTimeout(scheduler.callback, scheduler.remainingTime);
+                scheduler.startTime = Date.now();
+                scheduler.id = setTimeout(scheduler.callback, scheduler.remainingTime);
                 scheduler.playing = true;
             }
         });
     }
-
-    //USAR pauseSchedulers E resumeSchedulers QUANDO ABRIR A LOJA
 
     clearAbilitiesManager() {
         this.Schedulers.forEach(scheduler => {

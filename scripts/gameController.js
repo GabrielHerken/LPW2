@@ -135,7 +135,6 @@ export function characterDied() {
         createCharacter();
         createBackground();
         createCamera();
-        resetCash();
         abilitiesManager.clearAbilitiesManager();
         resetStore();
     }, 1000);

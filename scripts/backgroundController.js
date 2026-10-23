@@ -1,7 +1,7 @@
 import { Transform, Vector2 } from "./stdModule.js";
-import { addFrameListener, createGameObject } from "./gameController.js";
+import { createGameObject } from "./gameController.js";
 import { canvas } from './renderController.js';
-import { checkCollision, createRectCollider } from "./collisionController.js";
+import { createRectCollider } from "./collisionController.js";
 
 let background;
 

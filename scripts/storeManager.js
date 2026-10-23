@@ -2,6 +2,7 @@ import { character, setAttack } from "./characterController.js";
 import { pauseResumeFrames } from "./gameController.js";
 import { getBowWeaponObject as bowWeapon } from "./bowAttack.js";
 import { getSwordWeaponObject as swordWeapon } from "./swordAttack.js";
+import { abilitiesManager } from "./abilitiesManager.js";
 
 const storeButton = document.getElementById('store-button');
 const store = document.getElementById('store');
@@ -13,9 +14,15 @@ let currentCash = 0;
 export let attributes = { force: 1, velocity: 1, defense: 1, life: 1, regen: 1 };
 
 storeButton.addEventListener('click', () => {
-    store.classList.toggle('hided');
+    store.classList.toggle('hide');
 
     pauseResumeFrames();
+
+    if (store.classList.contains('hide')) {
+        abilitiesManager.resumeSchedulers();
+    } else {
+        abilitiesManager.pauseSchedulers();
+    }
 });
 
 document.querySelectorAll('#atributos button').forEach(button => {
