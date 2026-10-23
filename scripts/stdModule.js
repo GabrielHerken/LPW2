@@ -110,14 +110,14 @@ export class Entity {
         return damage;
     }
 
-    getHit(damage) {
-        this.health -= this.damageCalculation(damage);
+    getHit(params) {
+        this.health -= this.damageCalculation(params.damage);
 
         if (this.health <= 0)
-            this.die();
+            this.die(params);
     }
 
-    die() {
+    die(params) {
         throw new Error('Função die não implementada');
     }
 
@@ -145,6 +145,17 @@ export class RectCollider {
         this.height = height;
         this.owner = owner
     }
+}
+
+export class Ability {
+    constructor(title, spriteURL, description, state = {}) {
+        this.title = title;
+        this.spriteURL = spriteURL;
+        this.description = description;
+        this.state = state;
+    }
+
+    register() {}
 }
 
 export class Weapon {

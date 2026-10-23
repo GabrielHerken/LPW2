@@ -5,6 +5,7 @@ import { tryToAttack } from './attackController.js';
 import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
 import { startWaves } from './wavesManager.js';
+import { abilitiesManager } from './abilitiesManager.js';
 import { attributes } from './storeManager.js';
 import { getBowAttackObject } from './bowAttack.js';
 
@@ -43,8 +44,8 @@ export function createCharacter() {
             character.lastHit = Date.now();
             return damage * (1 - (attributes.defense - 1) / defenseMultiplier);
         }
-
-        character.die = () => {
+        
+        character.die = params => {
             removeFrameListener(repeatOnFrame);
             document.removeEventListener('keydown', keyDownEvent);
             document.removeEventListener('keyup', keyUpEvent);
@@ -90,12 +91,11 @@ const inputMapper = {
 }
 
 function repeatOnFrame(deltaTime) {
+    character.gameObject.velocity = input.multiplicar(abilitiesManager.getAttribute('velocity', initialVelocity * (1 + (attributes.velocity - 1) / velocityMultiplier), {owner: character}));
+
     if (character.health < character.maxHealth && Date.now() - character.lastHit >= regenTime * 1000) {
         character.health = Math.min(character.maxHealth, character.health * (1 + deltaTime / 1000 * regenFactor * (1 + (attributes.regen - 1) / regenMultiplier)));
     }
-
-    velocity = initialVelocity * (1 + (attributes.velocity - 1) / velocityMultiplier);
-    character.gameObject.velocity = input.multiplicar(velocity);
 }
 
 function inputHandler(e, down) {

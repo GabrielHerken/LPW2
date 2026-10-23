@@ -1,3 +1,4 @@
+import { newUpgrades } from "./abilitiesManager.js";
 import { createEnemy, enemies } from "./enemiesController.js";
 import { createGameObject } from "./gameController.js";
 import { delay, Transform, Vector2 } from "./stdModule.js";
@@ -30,6 +31,9 @@ const waves = [
     ]),
     new Wave([
         new WaveBurst(enemies.basicEnemy, 20, .5)
+    ]),
+    new Wave([
+        new WaveBurst(enemies.basicEnemy, 40, .2)
     ])
 ];
 
@@ -43,6 +47,9 @@ let killedEnemies = 0;
 
 const timers = { functions: [] };
 let toStop = false;
+
+const WAVES_PER_ABILITY = 1;
+let wavesUntilAbilities = WAVES_PER_ABILITY;
 
 export function pauseWaves() {
     timers.functions.forEach(timer => timer.pause());
@@ -62,6 +69,14 @@ function nextWave() {
     killedEnemies = 0;
 
     (async () => {
+        if (wavesUntilAbilities == 0) {
+            await newUpgrades();
+
+            wavesUntilAbilities = WAVES_PER_ABILITY;
+        }
+        
+        wavesUntilAbilities--;
+
         for (let i=0; i<waves[wave].bursts.length; i++) {
             const burst = waves[wave].bursts[i];
             if (burst.type == null) {
@@ -96,6 +111,7 @@ async function spawnBurst(burst) {
 }
 
 export function startWaves() {
+    wavesUntilAbilities = WAVES_PER_ABILITY
     toStop = false;
     wave = 0;
     spawners = [];
