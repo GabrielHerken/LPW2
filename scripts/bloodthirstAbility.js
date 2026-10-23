@@ -2,13 +2,14 @@ import { abilitiesManager } from "./abilitiesManager.js";
 import { character } from "./characterController.js";
 import { Ability } from "./stdModule.js";
 
-export const abilityOBJ = new Ability('Sede de Sangue', './sprites/bloodthirst.png', 'Se você matar 3 inimigos rapidamente, ganha um buff por tempo limitado, enquanto você continuar matando inimigos', { kills: 0, time: Date.now(), timer: null, unregister: null });
+export const abilityOBJ = new Ability('Sede de Sangue', './sprites/bloodthirst.png', 'Se você matar 3 inimigos rapidamente, ganha um buff por tempo limitado, enquanto você continuar matando inimigos', { kills: 0, inTime: null, timer: null, unregister: null });
 
 abilityOBJ.register = This => {
     const unregister = abilitiesManager.registerToEvent('combat:kill', args => {
         if (!args.killer == character) return;
 
-        if (Date.now() - This.state.time <= 3000) {
+        if (This.state.inTime != null) {
+            abilitiesManager.stopScheduler(This.state.inTime);
             This.state.kills++;
 
             if (This.state.kills >= 3) {
@@ -32,7 +33,7 @@ abilityOBJ.register = This => {
             This.state.kills = 1;
         }
 
-        This.state.time = Date.now();
+        This.state.inTime = abilitiesManager.createScheduler(3000, () => This.state.inTime = null);
     });
 
     return () => {

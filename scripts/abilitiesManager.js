@@ -9,9 +9,12 @@ const abilities = [thornsAbilityOBJ, berserkerAbilityOBJ, bloodthirstAbilityOBJ]
 
 function selectUpgrade(ability) {
     abilitiesManager.addAbility(ability);
+    abilitiesManager.resumeSchedulers();
 }
 
 export function newUpgrades() {
+    abilitiesManager.pauseSchedulers();
+
     return new Promise(res => {
         abilitiesSelector.classList.remove('hide');
 
