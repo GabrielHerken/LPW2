@@ -2,6 +2,7 @@ import { newUpgrades } from "./abilitiesManager.js";
 import { createEnemy, enemies } from "./enemiesController.js";
 import { createGameObject } from "./gameController.js";
 import { delay, Transform, Vector2 } from "./stdModule.js";
+import { refreshStore } from "./storeManager.js";
 
 class WaveBurst {
     constructor(type, quantity, interval) {
@@ -44,15 +45,23 @@ spawnerSprite.src = './sprites/portal.png';
 let wave = 0;
 let killedEnemies = 0;
 
-const stops = { functions: [] };
+const timers = { functions: [] };
 let toStop = false;
 
 const WAVES_PER_ABILITY = 1;
 let wavesUntilAbilities = WAVES_PER_ABILITY;
 
+export function pauseWaves() {
+    timers.functions.forEach(timer => timer.pause());
+}
+
+export function resumeWaves() {
+    timers.functions.forEach(timer => timer.resume());
+}
+
 export function stopWaves() {
-    stops.functions.forEach(stop => stop());
-    stops.functions = [];
+    timers.functions.forEach(timer => timer.pause());
+    timers.functions = [];
     toStop = true;
 }
 
@@ -71,9 +80,9 @@ function nextWave() {
         for (let i=0; i<waves[wave].bursts.length; i++) {
             const burst = waves[wave].bursts[i];
             if (burst.type == null) {
-                const res = await delay(burst.interval, stops);
+                const res = await delay(burst.interval, timers);
                 if (res) {
-                    stops.functions.splice(stops.functions.indexOf(res), 1);
+                    timers.functions.splice(timers.functions.indexOf(res), 1);
                 } else {
                     break;
                 }
@@ -92,9 +101,9 @@ async function spawnBurst(burst) {
         spawnerIndex++;
         if (spawnerIndex == spawners.length) spawnerIndex = 0;
 
-        const res = await delay(burst.interval, stops);
+        const res = await delay(burst.interval, timers);
         if (res) {
-            stops.functions.splice(stops.functions.indexOf(res), 1);
+            timers.functions.splice(timers.functions.indexOf(res), 1);
         } else {
             break;
         }
@@ -124,6 +133,7 @@ export function enemyKilled() {
 
         if (wave < waves.length) {
             nextWave();
+            refreshStore();
         } else {
             console.log('cabô');
         }

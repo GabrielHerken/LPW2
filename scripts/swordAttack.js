@@ -1,7 +1,7 @@
 import { abilitiesManager } from "./abilitiesManager.js";
 import { checkCollision, createCircleCollider } from "./collisionController.js";
 import { createGameObject, gameObjectExists, removeGameObject } from "./gameController.js";
-import { Attack, Entity, Transform, Vector2 } from "./stdModule.js";
+import { Attack, Entity, Transform, Vector2, Weapon } from "./stdModule.js";
 
 //PROPERTIES
 
@@ -30,6 +30,10 @@ export function getSwordAttackObject(owner) {
     return new Attack(owner, swordAttack, maxCooldown);
 }
 
+export function getSwordWeaponObject() {
+    return new Weapon('Espada', './sprites/espada.png', 'Ataca em uma região à sua frente, em curta distância', 15, 'sword');
+}
+
 //ATTACK EFFECT
 
 const sprite = new Image();
@@ -48,17 +52,17 @@ function despawnGO(gameObject) {
     removeGameObject(gameObject);
 }
 
-function swordAttack(attackObject, direction, filter) {
-    const gameObject = spawnGO(attackObject, direction);
+function swordAttack(attackObject, params) {
+    const gameObject = spawnGO(attackObject, params.direction);
 
     const hitted = [];
     gameObject.colliders.forEach(collider => {
-        const collided = checkCollision(collider, filter == '' ? ['damageable'] : ['damageable', filter]);
+        const collided = checkCollision(collider, params.filter == null ? ['damageable'] : ['damageable', params.filter]);
         collided.forEach(collider => {if (hitted.indexOf(collider.owner) == -1) hitted.push(collider.owner)});
     })
 
     hitted.forEach(enemy => {
-        enemy.getComponent(Entity).getHit({ owner: attackObject.owner.getComponent(Entity), damage: damage });
+        enemy.getComponent(Entity).getHit({ owner: attackObject.owner.getComponent(Entity), damage: damage * (params.multiplier == null ? 1 : params.multiplier) });
         abilitiesManager.fireEvent('combat:hit', { owner: attackObject.owner.getComponent(Entity) });
     });
 

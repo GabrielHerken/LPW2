@@ -6,10 +6,19 @@ import { getSwordAttackObject } from './swordAttack.js';
 import { createCircleCollider } from './collisionController.js';
 import { startWaves } from './wavesManager.js';
 import { abilitiesManager } from './abilitiesManager.js';
+import { attributes } from './storeManager.js';
+import { getBowAttackObject } from './bowAttack.js';
 
 //PROPERTIES
 const initialMaxHealth = 50;
-const velocity = 100;
+const initialVelocity = 100;
+const velocityMultiplier = 10.0;
+const forceMultiplier = 5.0;
+const defenseMultiplier = 20.0;
+let velocity = initialVelocity;
+const regenTime = 5;
+const regenFactor = 0.1;
+const regenMultiplier = 0.15;
 
 //CHARACTER CREATION
 
@@ -31,6 +40,11 @@ export function createCharacter() {
 
         character.gameObject.addComponent(Entity, character);
 
+        character.damageCalculation = damage => {
+            character.lastHit = Date.now();
+            return damage * (1 - (attributes.defense - 1) / defenseMultiplier);
+        }
+        
         character.die = params => {
             removeFrameListener(repeatOnFrame);
             document.removeEventListener('keydown', keyDownEvent);
@@ -48,7 +62,7 @@ export function createCharacter() {
 
         const keyDownEvent = e => inputHandler(e, true);
         const keyUpEvent = e => inputHandler(e, false);
-        const clickEvent =  e => tryToAttack(attacks[0], getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), 'enemy');
+        const clickEvent =  e => {const mp = getMousePosition(e); if (mp.x >= 0 && mp.x <= canvasElement.width && mp.y >= 0 && mp.y <= canvasElement.height) tryToAttack(attacks[0], {direction: getMousePosition(e).somar(character.gameObject.localTransform.position.multiplicar(-1)).normalize(), filter: 'enemy', multiplier: 1 + (attributes.force - 1) / forceMultiplier})};
         document.addEventListener('keydown', keyDownEvent);
         document.addEventListener('keyup', keyUpEvent);
         document.addEventListener('click', clickEvent);
@@ -60,6 +74,11 @@ export function createCharacter() {
 //ATTACKS
 
 let attacks = [];
+const attackObjects = { sword: getSwordAttackObject, bow: getBowAttackObject };
+
+export function setAttack(arma) {
+    attacks[0] = attackObjects[arma](character.gameObject);
+}
 
 //INPUTS
 
@@ -72,7 +91,11 @@ const inputMapper = {
 }
 
 function repeatOnFrame(deltaTime) {
-    character.gameObject.velocity = input.multiplicar(abilitiesManager.getAttribute('velocity', velocity, {owner: character}));
+    character.gameObject.velocity = input.multiplicar(abilitiesManager.getAttribute('velocity', initialVelocity * (1 + (attributes.velocity - 1) / velocityMultiplier), {owner: character}));
+
+    if (character.health < character.maxHealth && Date.now() - character.lastHit >= regenTime * 1000) {
+        character.health = Math.min(character.maxHealth, character.health * (1 + deltaTime / 1000 * regenFactor * (1 + (attributes.regen - 1) / regenMultiplier)));
+    }
 }
 
 function inputHandler(e, down) {
