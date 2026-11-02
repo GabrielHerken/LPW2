@@ -12,17 +12,19 @@ const inputMapper = {
 
 let character;
 
-let characterSprite = new Image();
-characterSprite.src = '../sprites/protagonista.png';
-characterSprite.addEventListener('load', () => {
-    const canvasElement = canvas.entitiesLayer.element;
-    const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
-    const initialVelocity = new Vector2(0, 0);
+if (gameIsStarted) {
+    let characterSprite = new Image();
+    characterSprite.src = '../sprites/protagonista.png';
+    characterSprite.addEventListener('load', () => {
+        const canvasElement = canvas.entitiesLayer.element;
+        const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+        const initialVelocity = new Vector2(0, 0);
 
-    character = createGameObject(initialPosition, initialVelocity, characterSprite, 'entitiesLayer');
+        character = createGameObject(initialPosition, initialVelocity, characterSprite, 'entitiesLayer');
 
-    addFrameListener(repeatOnFrame);
-});
+        addFrameListener(repeatOnFrame);
+    });
+}
 
 function repeatOnFrame() {
     character.velocity = input;
