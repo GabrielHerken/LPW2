@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,73 +8,47 @@
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./sprites/favicon.png" type="image/x-icon">
 </head>
-<body>
-    <canvas width="200" height="200" id="backgroundLayer"></canvas>
-    <canvas width="200" height="200" id="objectsLayer"></canvas>
-    <canvas width="200" height="200" id="entitiesLayer"></canvas>
-    <canvas width="200" height="200" id="attacksLayer"></canvas>
-    <canvas width="200" height="200" id="overlayLayer"></canvas>
 
-    <p id="cash"><span>CASH:</span> $0</p>
-    <div id="abilities" class="hide">
-        <h1>ESCOLHA UM:</h1>
-        <ul>
-            <li>
-                <h2>Abilidade 1</h2>
-                <img src="./sprites/wall.png">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus ab non quisquam repudiandae nihil dolorum eum, consequuntur dolores voluptatum, itaque accusamus ratione. Harum aspernatur aperiam excepturi soluta deleniti minima. Tempora?</p>
-            </li>
-            <li>
-                <h2>Abilidade 2</h2>
-                <img src="./sprites/wall.png">
-                <p>Ducimus ab non quisquam repudiandae nihil dolorum eum, consequuntur dolores voluptatum, itaque accusamus ratione. Harum aspernatur aperiam excepturi soluta deleniti minima. Tempora?</p>
-            </li>
-            <li>
-                <h2>Abilidade 3</h2>
-                <img src="./sprites/wall.png">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora?</p>
-            </li>
-        </ul>
-    </div>
-    <button type="button" id="store-button">Loja</button>
-    <div id="store" class="hide">
-        <h1>LOJA</h1>
-        <div id="atributos">
-            <h2>ATRIBUTOS</h2>
-            <ul>
-                <li data-attribute="force" data-quantity="1"><span>Força: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="velocity" data-quantity="1"><span>Velocidade: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="defense" data-quantity="1"><span>Defesa: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="life" data-quantity="1"><span>Vida: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="regen" data-quantity="1"><span>Regeneração: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-            </ul>
-        </div>
-        <div id="armas">
-            <h2>ARMAS</h2>
-            <ul>
-                <li data-arma="bow" data-price="30">
-                    <h3>Arco</h3>
-                    <span>$30</span>
-                    <img src="./sprites/arco.png" alt="">
-                    <p>Atira flechas a distância</p>
-                </li>
-                <li data-arma="bow" data-price="30">
-                    <h3>Arco</h3>
-                    <span>$30</span>
-                    <img src="./sprites/arco.png" alt="">
-                    <p>Atira flechas a distância</p>
-                </li>
-            </ul>
+<body>
+
+    <div class="area-usuario">
+        <button id="botao-iniciar-sessao">Iniciar sessão</button>
+
+        <div id="usuario-logado">
+            <div id="foto-perfil"></div>
+            <p id="login-valido"></p>
+            <button id="botao-sair">Sair</button>
         </div>
     </div>
+
+    <dialog id="janela-login">
+        <p id="login-errado">Nome de usuário ou senha inválidos</p>
+        <p id="conta-criada"></p>
+        <h2 id="titulo">Entrar</h2>
+        <button id="botao-fecha-login">X</button>
+        <form>
+            <input type="text" placeholder="Nome de usuário" id="login-nome" required>
+            <input type="password" placeholder="Senha" id="login-senha" required>
+            <button type="submit" id="logar">Entrar</button>
+            <h3 id="texto-conta">Não possui uma conta?</h3>
+            <button type="button" id="criar-conta">Crie agora</button>
+        </form>
+    </dialog>
     
-    <script src="./scripts/stdModule.js" type="module"></script>
-    <script src="./scripts/gameController.js" type="module"></script>
-    <script src="./scripts/renderController.js" type="module"></script>
-    <script src="./scripts/characterController.js" type="module"></script>
-    <script src="./scripts/backgroundController.js" type="module"></script>
-    <script src="./scripts/attackController.js" type="module"></script>
-    <script src="./scripts/enemiesController.js" type="module"></script>
-    <script src="./scripts/storeManager.js" type="module"></script>
+    <div class="menu-principal">
+        <h1 id="titulo-jogo">LPW</h1>
+        <button type="button" id="botao-jogar">Jogar</button>
+    </div>
+ 
+        <canvas width="200" height="200" id="backgroundLayer"></canvas>
+        <canvas width="200" height="200" id="entitiesLayer"></canvas>
+        <script src="scripts/janelaLogin.js"></script>
+        <script src="./scripts/stdModule.js" type="module"></script>
+        <script src="./scripts/renderController.js" type="module"></script>
+        <script src="./scripts/characterController.js" type="module"></script>
+        <script src="./scripts/backgroundController.js" type="module"></script>
+        <script src="./scripts/gameController.js" type="module"></script>
+
 </body>
+
 </html>
