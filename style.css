@@ -11,7 +11,7 @@ canvas {
     image-rendering: pixelated;
 }
 
-button {
+.lucasbutton {
     background-color: #43C6AC;
     color: #071B2B;
     font-size: 15px;
@@ -22,7 +22,7 @@ button {
     transition: background-color 0.2s, transform 0.2s;
 }
 
-button:hover {
+.lucasbutton:hover {
     transform: translateY(-1px);
     background-color: #176B70;
     color: #EAF4F4;
@@ -206,6 +206,7 @@ button:hover {
 #botao-sair:hover {
     background-color: #103B4A;
     border-color: #D9B56D;
+}
 
 #cash {
     position: absolute;

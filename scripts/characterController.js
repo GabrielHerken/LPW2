@@ -95,7 +95,7 @@ function repeatOnFrame(deltaTime) {
     character.gameObject.velocity = input.multiplicar(abilitiesManager.getAttribute('velocity', initialVelocity * (1 + (attributes.velocity - 1) / velocityMultiplier), {owner: character}));
 
     
-    console.log(character.lastHit);
+    //console.log(character.lastHit);
     if (character.health < character.maxHealth && character.lastHit == regenTime * 1000) {
         character.health = Math.min(character.maxHealth, character.health * (1 + deltaTime / 1000 * regenFactor * (1 + (attributes.regen - 1) / regenMultiplier)));
     } else if (character.lastHit < regenTime * 1000) {

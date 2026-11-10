@@ -1,3 +1,6 @@
+import { abilitiesManager } from "./abilitiesManager.js"
+import { pauseResumeFrames } from "./gameController.js"
+
 const janela = document.querySelector("#janela-login")
 const botaoFechaLogin = document.querySelector("#botao-fecha-login")
 const botaoIniciarSessao = document.querySelector("#botao-iniciar-sessao")
@@ -30,11 +33,29 @@ botaoIniciarSessao.addEventListener("click", () => {
     loginCriado.style.display = "none"
 
     janela.showModal()
+
+    const store = document.getElementById('store');
+    pauseResumeFrames();
+
+    if (store.classList.contains('hide')) {
+        abilitiesManager.resumeSchedulers();
+    } else {
+        abilitiesManager.pauseSchedulers();
+    }
 })
 
 
 botaoFechaLogin.addEventListener("click", () => {
     janela.close()
+
+    const store = document.getElementById('store');
+    pauseResumeFrames();
+
+    if (store.classList.contains('hide')) {
+        abilitiesManager.resumeSchedulers();
+    } else {
+        abilitiesManager.pauseSchedulers();
+    }
 })
 
 alternarOpcoes.addEventListener("click", (event) => {
@@ -127,6 +148,14 @@ formulario.addEventListener("submit", (event) => {
 
             janela.close()
 
+            const store = document.getElementById('store');
+            pauseResumeFrames();
+
+            if (store.classList.contains('hide')) {
+                abilitiesManager.resumeSchedulers();
+            } else {
+                abilitiesManager.pauseSchedulers();
+            }
         } else {
             loginInvalido.textContent = "Nome de usuário ou senha inválidos!"
             loginInvalido.style.display = "block"
