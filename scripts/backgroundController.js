@@ -3,7 +3,29 @@ import { createGameObject } from "./gameController.js";
 import { canvas } from './renderController.js';
 import { createRectCollider } from "./collisionController.js";
 
-let background;
+function drawGame() {
+    const canvasElement = canvas.backgroundLayer.element;
+    
+    let background;
+    let backgroundSprite = new Image();
+
+    if (gameIsStarted) {
+        backgroundSprite.src = '../sprites/backgrounddPiratas.png';
+        backgroundSprite.addEventListener('load', () => {
+            const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+            const initialVelocity = new Vector2(0, 0);
+            background = createGameObject(initialPosition, initialVelocity, backgroundSprite, 'backgroundLayer');
+        });
+    }
+    else {
+        backgroundSprite.src = '../sprites/backgroundd.webp';
+        backgroundSprite.addEventListener('load', () => {
+            const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+            const initialVelocity = new Vector2(0, 0);
+            background = createGameObject(initialPosition, initialVelocity, backgroundSprite, 'backgroundLayer');
+        });
+    }
+}       
 
 export function createBackground() {
     let backgroundSprite = new Image();
