@@ -1,6 +1,7 @@
-import { Vector2 } from "./stdModule.js";
+import { Transform, Vector2 } from "./stdModule.js";
 import { createGameObject } from "./gameController.js";
 import { canvas } from './renderController.js';
+import { createRectCollider } from "./collisionController.js";
 
 function drawGame() {
     const canvasElement = canvas.backgroundLayer.element;
@@ -26,39 +27,32 @@ function drawGame() {
     }
 }       
 
+export function createBackground() {
+    let backgroundSprite = new Image();
+    backgroundSprite.src = './sprites/backgroundd.webp';
+    backgroundSprite.onload = () => {
+        const canvasElement = canvas.backgroundLayer.element;
+        const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height / 2);
+        const initialVelocity = new Vector2(0, 0);
 
-window.addEventListener('load', () => {
-    const canvasElement = canvas.backgroundLayer.element;
+        background = createGameObject(new Transform(initialPosition, 0, Vector2.one.multiplicar(2)), initialVelocity, backgroundSprite, 'backgroundLayer', 'Background');
 
-    window.addEventListener("click", (e) => {
-        if (gameIsStarted) return;
+        createWall(new Vector2(100, 292), 'Horizontal', 400);
+        createWall(new Vector2(100, -92), 'Horizontal', 400);
+        createWall(new Vector2(-92, 100), 'Vertical', 400-16*2);
+        createWall(new Vector2(292, 100), 'Vertical', 400-16*2);
+        createWall(new Vector2(58, 120), 'Horizontal', 100-16);
+    };
+}
 
-        
-        const rect = canvasElement.getBoundingClientRect();
-   
-        const cliqueFisicoX = e.clientX - rect.left;
-        const cliqueFisicoY = e.clientY - rect.top;
+const wallThickness = 16;
 
-        const mouseX = (cliqueFisicoX / canvasElement.clientWidth) * canvasElement.width;
-        const mouseY = (cliqueFisicoY / canvasElement.clientHeight) * canvasElement.height;
-
-  
-        if (mouseX >= 0 && mouseX <= canvasElement.width && mouseY >= 0 && mouseY <= canvasElement.height) {
-            
-            console.log(`Clique perfeitamente calibrado -> X interno: ${Math.round(mouseX)}, Y interno: ${Math.round(mouseY)}`);
-
-
-            if (
-                mouseX >= startButton.x && 
-                mouseX <= startButton.x + startButton.width && 
-                mouseY >= startButton.y && 
-                mouseY <= startButton.y + startButton.height
-            ) {
-                gameIsStarted = true;
-                drawGame(); 
-            } 
-        }
-    });
-
-    drawGame();
-});
+function createWall(position, axis, width) {
+    const wallSprite = new Image();
+    wallSprite.src = './sprites/wall.png';
+    wallSprite.onload = () => {
+        const wall = createGameObject(new Transform(position, 0, axis == 'Horizontal' ? new Vector2(width / 32.0, wallThickness / 32.0) : new Vector2(wallThickness / 32.0, width / 32.0)), Vector2.zero, wallSprite, 'backgroundLayer', 'wall');
+        createRectCollider(Vector2.zero, axis == 'Horizontal' ? width : wallThickness, axis == 'Vertical' ? width : wallThickness, wall);
+        wall.addTag('wall');
+    }
+}
