@@ -28,17 +28,23 @@ storeButton.addEventListener('click', () => {
 document.querySelectorAll('#atributos button').forEach(button => {
     button.addEventListener('click', () => {
         const priceSpan = button.previousSibling;
-        
+
         if (priceSpan.innerHTML <= currentCash) {
-            addCash(-priceSpan.innerHTML);
-            priceSpan.innerHTML = Math.floor(priceSpan.innerHTML * 1.4);
+            if (attributes[button.parentElement.parentElement.dataset.attribute] >= 5) {
+                attributes[button.parentElement.parentElement.dataset.attribute] = 5;
+            }
+            else {
+                addCash(-priceSpan.innerHTML);
+                priceSpan.innerHTML = Math.floor(priceSpan.innerHTML * 1.4);
 
-            attributes[button.parentElement.parentElement.dataset.attribute]++;
-            button.parentElement.parentElement.dataset.quantity = attributes[button.parentElement.parentElement.dataset.attribute];
-            button.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML = attributes[button.parentElement.parentElement.dataset.attribute];
+                attributes[button.parentElement.parentElement.dataset.attribute]++;
 
-            if (button.parentElement.parentElement.dataset.attribute == 'life')
-                character.increaseMaxHealth(5); //Vida a mais
+                button.parentElement.parentElement.dataset.quantity = attributes[button.parentElement.parentElement.dataset.attribute];
+                button.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML = attributes[button.parentElement.parentElement.dataset.attribute];
+
+                if (button.parentElement.parentElement.dataset.attribute == 'life')
+                    character.increaseMaxHealth(5); //Vida a mais
+            }
         }
     });
 });

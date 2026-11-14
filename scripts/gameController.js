@@ -125,19 +125,26 @@ function handleVelocity(dt, gameObject) {
 
 //GAME STATE HANDLING
 
+let botaoTentarNovamente = document.querySelector("#botao-tentar-novamente");
 export function characterDied() {
     stopWaves();
     Array.from(frameListeners).forEach(removeFrameListener);
     Array.from(gameObjects).forEach(removeGameObject);
+    
+    document.querySelector(".tela-conclusao").style.display = "flex";
 
-    setTimeout(() => {
-        attackControllerStart();
-        createCharacter();
-        createBackground();
-        createCamera();
-        abilitiesManager.clearAbilitiesManager();
-        resetStore();
-    }, 1000);
+    const img = new Image();
+    img.src = '../sprites/fundoMenuPrincipal.png';
+    img.onload = () => document.querySelector('#backgroundLayer').getContext('2d').drawImage(img, 0, 0);
+
+
+    botaoTentarNovamente.addEventListener('click', () =>{
+        document.querySelector(".tela-conclusao").style.display = "none";
+        setTimeout(() => {
+            startAllGames();
+            abilitiesManager.clearAbilitiesManager();
+        }, 50);
+    })
 }
 
 export function startAllGames() {

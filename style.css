@@ -543,6 +543,40 @@ canvas {
     -webkit-text-stroke: 0.01px #38251E;
 }
 
+.tela-conclusao{
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 30%;
+    left: 37%;
+    z-index: 10;
+}
+
+#mensagem-conclusao{
+    margin: 0;
+    font-size: 150px;
+    font-family: 'FontePiratas', serif;
+    color: #D9B56D;
+    text-shadow: 3px 4px 0px #1B100D;
+    -webkit-text-stroke: 0.01px #38251E;
+}
+
+#botao-tentar-novamente{
+    margin: 20px;
+    font-size: 60px;
+    font-family: 'FontePiratas', serif;
+    color: #D9B56D;
+    text-shadow: 3px 4px 0px #1B100D;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#botao-tentar-novamente:hover{
+    color: #805532;
+    transform: translateY(-2px);
+}
+
 #titulo-deslocado-menu{
     margin-left: 110px;
 }
