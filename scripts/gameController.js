@@ -153,4 +153,6 @@ export function startAllGames() {
     createBackground();
     createCamera();
     resetStore();
+    document.querySelector("#store-button").style.display = "block";
+    document.querySelector("#cash").style.display = "block";
 }

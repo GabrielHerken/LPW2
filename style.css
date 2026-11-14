@@ -245,6 +245,7 @@ canvas {
 
 
 #cash {
+    display: none;
     position: absolute;
     border: 0;
     border-radius: 10px;
@@ -369,6 +370,7 @@ canvas {
 }
 
 #store-button {
+    display: none;
     position: absolute;
     bottom: 1rem;
     left: 1rem;
