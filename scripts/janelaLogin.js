@@ -11,7 +11,9 @@ const formulario = janela.querySelector("form")
 const usuarioLogado = document.querySelector("#usuario-logado")
 const botaoSair = document.querySelector("#botao-sair")
 let fotoUsuario = document.querySelector("#foto-perfil")
+let botaoModoEscuro = document.querySelector("#botao-modo-escuro")
 
+let modoEscuro = true
 let criandoConta = false
 
 
@@ -27,6 +29,19 @@ loginValido.style.display = "none"
 loginInvalido.style.display = "none"
 loginCriado.style.display = "none"
 
+
+botaoModoEscuro.addEventListener("click", () =>{
+    modoEscuro=!modoEscuro
+
+    if(modoEscuro){
+        document.body.style.backgroundColor = "#232b38"
+        botaoModoEscuro.src = "../sprites/modoEscuro.png"
+    }
+    else{
+        document.body.style.backgroundColor = "#F0D39A"
+        botaoModoEscuro.src = "../sprites/modoClaroo.png"
+    }
+})
 
 botaoIniciarSessao.addEventListener("click", () => {
     loginInvalido.style.display = "none"

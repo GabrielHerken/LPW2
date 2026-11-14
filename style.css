@@ -4,8 +4,9 @@
 }
 
 body {
-    background-color: #042033;
+    background-color: #232b38;
     overflow-y: hidden;
+    transition: all 400ms;
 }
 
 canvas {
@@ -15,7 +16,6 @@ canvas {
     top: calc(50% - 90vh / 2);
     image-rendering: pixelated;
 }
-
 
 .lucasbutton {
     background-color: #684326;
@@ -51,6 +51,7 @@ canvas {
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
+    width: fit-content;
     transition: 0.2s;
 }
 
@@ -86,7 +87,13 @@ canvas {
     color: #D9B56D;
     text-shadow: 2px 2px 0 #1B100D;
 }
-
+#botao-modo-escuro{
+    width: 30px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
 
 #botao-fecha-login {
     position: absolute;
@@ -239,7 +246,12 @@ canvas {
 
 #cash {
     position: absolute;
-    color: #FFFCE6;
+    border: 0;
+    border-radius: 10px;
+    background-color: #38251E;
+    color: #F0D39A;
+    padding: 5px;
+    border-radius:  solid;
     font-weight: 600;
     font-size: 2rem;
     left: 1rem;
@@ -366,8 +378,8 @@ canvas {
     border-radius: 30%;
     font-size: 1.75rem;
     font-weight: 900;
-    background-color: #FFFCE6;
-    color: #05133a;
+    background-color: #38251E;
+    color: #F0D39A;
 }
 
 #store-button:hover {
@@ -516,31 +528,34 @@ canvas {
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 20px;
     position: absolute;
-    top: 30%;
-    left: 40%;
+    top: 10%;
+    left: 37%;
     z-index: 10;
 }
 
-#titulo-jogo {
+.titulo-jogo {
     margin: 0;
     font-size: 150px;
     font-family: 'FontePiratas', serif;
     color: #D9B56D;
     text-shadow: 3px 4px 0px #1B100D;
-    -webkit-text-stroke: 1px #38251E;
+    -webkit-text-stroke: 0.01px #38251E;
 }
 
-#botao-jogar {
-    font-family: 'FontePiratas', serif;
-    font-size: 100px;
-    color: #F0D39A;
+#titulo-deslocado-menu{
+    margin-left: 110px;
+}
 
+#botao-jogar, #botao-autores {
+    margin-top: 20px;
+    font-family: 'FontePiratas', serif;
+    font-size: 80px;
+    color: #F0D39A;
     background-color: #684326;
     border: 2px solid #D9B56D;
     border-radius: 5px;
-
+    width: 400px;
     padding: 12px 35px;
     cursor: pointer;
 
@@ -548,26 +563,11 @@ canvas {
     transition: 0.2s;
 }
 
-#botao-jogar:hover {
+#botao-jogar:hover, #botao-autores:hover {
     background-color: #805832;
     transform: translateY(-2px);
 }
 
-#botao-autores{
-   font-family: 'FontePiratas', serif;
-    font-size: 100px;
-    color: #F0D39A;
-
-    background-color: #684326;
-    border: 2px solid #D9B56D;
-    border-radius: 5px;
-
-    padding: 12px 35px;
-    cursor: pointer;
-
-    box-shadow: 0 4px 0 #38251E;
-    transition: 0.2s;
-}
 
 
 #janela-autores {
