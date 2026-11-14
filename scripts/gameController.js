@@ -140,8 +140,10 @@ export function characterDied() {
     }, 1000);
 }
 
-attackControllerStart();
-createCharacter();
-createBackground();
-createCamera();
-resetStore();
+export function startAllGames() {
+    attackControllerStart();
+    createCharacter();
+    createBackground();
+    createCamera();
+    resetStore();
+}

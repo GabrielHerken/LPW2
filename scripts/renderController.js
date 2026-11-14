@@ -47,7 +47,8 @@ function renderImage(image, transform, ctx) {
 
 export function renderFrame() {
     //CLEARING
-    Object.values(canvas).forEach(cnv => cnv.context.clearRect(0, 0, cnv.element.width, cnv.element.height));
+    if (layersToRender.backgroundLayer.length > 0)
+        Object.values(canvas).forEach(cnv => cnv.context.clearRect(0, 0, cnv.element.width, cnv.element.height));
 
     //RENDERING EACH LAYER
     Object.keys(canvas).forEach(key => layersToRender[key].forEach(element => renderImage(element.sprite, element.globalTransform, canvas[key].context)));
