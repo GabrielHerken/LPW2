@@ -7,8 +7,10 @@
     <title>Pirate Arena</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./sprites/faviconCaveira.png" type="image/x-icon">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 </head>
-
 
 <body>
 
@@ -16,7 +18,7 @@
         <img id="botao-audio" src="sprites/audioBotao.png" alt="">
         <img id="botao-modo-escuro" src="sprites/modoEscuro.png" alt="">
         <button id="botao-iniciar-sessao" class="lucasbutton">Login</button>
-        
+
         <div id="usuario-logado">
             <div id="foto-perfil"></div>
             <p id="login-valido"></p>
@@ -37,13 +39,13 @@
             <button class="lucasbutton" type="button" id="criar-conta">Create now</button>
         </form>
     </dialog>
-    
+
     <canvas width="200" height="200" id="backgroundLayer"></canvas>
     <canvas width="200" height="200" id="objectsLayer"></canvas>
     <canvas width="200" height="200" id="entitiesLayer"></canvas>
     <canvas width="200" height="200" id="attacksLayer"></canvas>
     <canvas width="200" height="200" id="overlayLayer"></canvas>
-    
+
     <div class="menu-principal">
         <h1 class="titulo-jogo">Pirate</h1>
         <h1 class="titulo-jogo" id="titulo-deslocado-menu">Arena</h1>
@@ -55,6 +57,8 @@
         <h1 id="mensagem-conclusao">You lose!</h1>
         <h2 id="botao-tentar-novamente">Try again</h2>
     </div>
+
+    <h1 id="mensagem-secreta">A shiver run down your spine...</h1>
 
     <dialog id="janela-autores">
         <h1>Authors</h1>
@@ -72,12 +76,15 @@
             <li>
                 <h2>Abilidade 1</h2>
                 <img src="./sprites/wall.png">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus ab non quisquam repudiandae nihil dolorum eum, consequuntur dolores voluptatum, itaque accusamus ratione. Harum aspernatur aperiam excepturi soluta deleniti minima. Tempora?</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus ab non quisquam repudiandae nihil
+                    dolorum eum, consequuntur dolores voluptatum, itaque accusamus ratione. Harum aspernatur aperiam
+                    excepturi soluta deleniti minima. Tempora?</p>
             </li>
             <li>
                 <h2>Abilidade 2</h2>
                 <img src="./sprites/wall.png">
-                <p>Ducimus ab non quisquam repudiandae nihil dolorum eum, consequuntur dolores voluptatum, itaque accusamus ratione. Harum aspernatur aperiam excepturi soluta deleniti minima. Tempora?</p>
+                <p>Ducimus ab non quisquam repudiandae nihil dolorum eum, consequuntur dolores voluptatum, itaque
+                    accusamus ratione. Harum aspernatur aperiam excepturi soluta deleniti minima. Tempora?</p>
             </li>
             <li>
                 <h2>Abilidade 3</h2>
@@ -92,11 +99,21 @@
         <div id="atributos">
             <h2>ATRIBUTOS</h2>
             <ul>
-                <li data-attribute="force" data-quantity="1"><span>Força: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="velocity" data-quantity="1"><span>Velocidade: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="defense" data-quantity="1"><span>Defesa: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="life" data-quantity="1"><span>Vida: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
-                <li data-attribute="regen" data-quantity="1"><span>Regeneração: <span>1</span></span><div>$<span>10</span><button type="button">+</button></div></li>
+                <li data-attribute="force" data-quantity="1"><span>Força: <span>1</span></span>
+                    <div>$<span>10</span><button type="button">+</button></div>
+                </li>
+                <li data-attribute="velocity" data-quantity="1"><span>Velocidade: <span>1</span></span>
+                    <div>$<span>10</span><button type="button">+</button></div>
+                </li>
+                <li data-attribute="defense" data-quantity="1"><span>Defesa: <span>1</span></span>
+                    <div>$<span>10</span><button type="button">+</button></div>
+                </li>
+                <li data-attribute="life" data-quantity="1"><span>Vida: <span>1</span></span>
+                    <div>$<span>10</span><button type="button">+</button></div>
+                </li>
+                <li data-attribute="regen" data-quantity="1"><span>Regeneração: <span>1</span></span>
+                    <div>$<span>10</span><button type="button">+</button></div>
+                </li>
             </ul>
         </div>
         <div id="armas">
@@ -117,7 +134,8 @@
             </ul>
         </div>
     </div>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cheet.js/0.3.2/cheet.min.js"></script>
     <script src="./scripts/audioManager.js" type="module"></script>
     <script src="./scripts/stdModule.js" type="module"></script>
     <script src="./scripts/gameController.js" type="module"></script>

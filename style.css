@@ -34,6 +34,29 @@ canvas {
     color: #F0D39A;
 }
 
+#mensagem-secreta{
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-style: 'Montserrat', sans-serif;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    z-index: 50;
+    animation: fadeAlert 3s ease-in-out forwards;
+}
+
+@keyframes fadeAlert {
+  0%   { opacity: 0; transform: translate(-50%, -10px); }
+  10%  { opacity: 1; transform: translate(-50%, 0); }
+  85%  { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+
 .area-usuario {
     display: flex;
     align-items: center;

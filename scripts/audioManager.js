@@ -40,3 +40,8 @@ export function playMusic(name, loop) {
 
     currentMusic.play();
 }
+
+cheet('r b g b', function (){
+    document.querySelector("#mensagem-secreta").style.display = "block";
+    musics.game = new Audio("../musics/musicaSecreta.m4a");
+});
