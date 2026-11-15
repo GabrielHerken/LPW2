@@ -1,3 +1,4 @@
+import { playMusic } from "./audioManager.js";
 import { startAllGames } from "./gameController.js";
 
 let botaoJogar = document.querySelector("#botao-jogar");
@@ -10,16 +11,22 @@ const img = new Image();
 img.src = '../sprites/fundoMenuPrincipal.png';
 img.onload = () => document.querySelector('#backgroundLayer').getContext('2d').drawImage(img, 0, 0);
 
-botaoJogar.addEventListener('click', ()=>{
+function playMenuMusic(){
+    playMusic("menu", true);
+}
+
+document.addEventListener('click', playMenuMusic, { once: true });
+
+botaoJogar.addEventListener('click', () => {
     startAllGames();
 
     menuPrincipal.style.display = 'none';
 });
 
-botaoAutores.addEventListener('click', () =>{
+botaoAutores.addEventListener('click', () => {
     janelaAutores.showModal();
 })
 
-botaoSairAutores.addEventListener('click', () =>{
+botaoSairAutores.addEventListener('click', () => {
     janelaAutores.close();
 })

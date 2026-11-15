@@ -1,8 +1,10 @@
 import { newUpgrades } from "./abilitiesManager.js";
+import { playMusic } from "./audioManager.js";
 import { createEnemy, enemies } from "./enemiesController.js";
 import { characterDied, createGameObject } from "./gameController.js";
 import { delay, Transform, Vector2 } from "./stdModule.js";
 import { refreshStore } from "./storeManager.js";
+
 
 class WaveBurst {
     constructor(type, quantity, interval) {
@@ -138,6 +140,7 @@ export function enemyKilled() {
             document.querySelector("#mensagem-conclusao").textContent = "You win!";
             document.querySelector(".tela-conclusao").style.display = "flex";
             document.querySelector("#botao-tentar-novamente").style.display = "none";
+            playMusic("win",false);
         }
     }
 }

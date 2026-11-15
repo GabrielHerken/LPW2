@@ -1,5 +1,6 @@
 import { abilitiesManager } from './abilitiesManager.js';
 import { attackControllerStart } from './attackController.js';
+import { playMusic } from './audioManager.js';
 import { createBackground } from './backgroundController.js';
 import { createCamera } from './cameraManager.js';
 import { createCharacter } from './characterController.js';
@@ -128,6 +129,8 @@ function handleVelocity(dt, gameObject) {
 let botaoTentarNovamente = document.querySelector("#botao-tentar-novamente");
 export function characterDied() {
     stopWaves();
+    playMusic("lose", false);
+    
     Array.from(frameListeners).forEach(removeFrameListener);
     Array.from(gameObjects).forEach(removeGameObject);
     
@@ -155,4 +158,5 @@ export function startAllGames() {
     resetStore();
     document.querySelector("#store-button").style.display = "block";
     document.querySelector("#cash").style.display = "block";
+    playMusic("game",true);
 }

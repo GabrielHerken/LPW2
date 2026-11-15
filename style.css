@@ -42,6 +42,14 @@ canvas {
     padding: 12px;
 }
 
+#botao-audio{
+    width: 30px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
 #botao-iniciar-sessao {
     background-color: #684326;
     color: #F0D39A;
