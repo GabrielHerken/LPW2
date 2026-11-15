@@ -3,7 +3,7 @@ import { addFrameListener, createGameObject } from "./gameController.js";
 import { Transform, Vector2 } from "./stdModule.js";
 
 export let camera = null;
-const margin = 40;
+const margin = 80;
 const velocity = 2;
 
 export function createCamera() {
