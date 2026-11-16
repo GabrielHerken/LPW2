@@ -13,7 +13,7 @@ let currentCash = 0;
 
 export let attributes = { force: 1, velocity: 1, defense: 1, life: 1, regen: 1 };
 
-storeButton.addEventListener('click', () => {
+function openStore(){
     store.classList.toggle('hide');
 
     pauseResumeFrames();
@@ -23,7 +23,14 @@ storeButton.addEventListener('click', () => {
     } else {
         abilitiesManager.pauseSchedulers();
     }
+}
+
+storeButton.addEventListener('click', () => {
+    openStore();
 });
+document.addEventListener("keydown", e =>{
+    if(e.key === 'e') openStore();
+})
 
 document.querySelectorAll('#atributos button').forEach(button => {
     button.addEventListener('click', () => {

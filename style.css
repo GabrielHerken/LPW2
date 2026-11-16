@@ -576,15 +576,37 @@ canvas {
     -webkit-text-stroke: 0.01px #38251E;
 }
 
-.tela-conclusao{
-    display: none;
+.tela-conclusao {
+    display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     position: absolute;
-    top: 30%;
-    left: 37%;
-    z-index: 10;
+    top: 5%;
+    left: 25%;
+    width: 700px;
+    height: 630px;
+    z-index: 50;
+    background-size: cover;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 600ms ease, visibility 0s linear 600ms;   
 }
+
+
+.tela-conclusao.ativa {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 600ms ease;                               
+}
+
+.tela-conclusao.derrota { background-image: url("sprites/tela_derrota.png"); }
+.tela-conclusao.vitoria { background-image: url("sprites/tela_vitoria.png"); }
 
 #mensagem-conclusao{
     margin: 0;

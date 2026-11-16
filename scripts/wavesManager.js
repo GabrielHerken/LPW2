@@ -29,13 +29,16 @@ class Wave {
 
 const waves = [
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 10, 1)
+        new WaveBurst(enemies.basicEnemy, 1, 1)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 20, .5)
+        new WaveBurst(enemies.basicEnemy, 1, .5)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 40, .2)
+        new WaveBurst(enemies.basicEnemy, 1, .2)
+    ]),
+    new Wave([
+        new WaveBurst(enemies.finalBoss,1,1)
     ])
 ];
 
@@ -76,10 +79,10 @@ function nextWave() {
 
             wavesUntilAbilities = WAVES_PER_ABILITY;
         }
-        
+
         wavesUntilAbilities--;
 
-        for (let i=0; i<waves[wave].bursts.length; i++) {
+        for (let i = 0; i < waves[wave].bursts.length; i++) {
             const burst = waves[wave].bursts[i];
             if (burst.type == null) {
                 const res = await delay(burst.interval, timers);
@@ -98,7 +101,7 @@ function nextWave() {
 }
 
 async function spawnBurst(burst) {
-    for (let i=0; i<burst.quantity; i++) {
+    for (let i = 0; i < burst.quantity; i++) {
         createEnemy(burst.type, spawners[spawnerIndex].globalTransform.position);
         spawnerIndex++;
         if (spawnerIndex == spawners.length) spawnerIndex = 0;
@@ -124,9 +127,11 @@ export function startWaves() {
     spawnSpawner(32, 84);
     spawnSpawner(116, 168);
 
-    nextWave();////
+    nextWave();
 }
 
+const tela = document.querySelector(".tela-conclusao");
+const mensagem = document.querySelector("#mensagem-conclusao");
 export function enemyKilled() {
     killedEnemies++;
 
@@ -137,10 +142,12 @@ export function enemyKilled() {
             nextWave();
             refreshStore();
         } else {
-            document.querySelector("#mensagem-conclusao").textContent = "You win!";
-            document.querySelector(".tela-conclusao").style.display = "flex";
-            document.querySelector("#botao-tentar-novamente").style.display = "none";
-            playMusic("win",false);
+
+            tela.classList.remove("derrota");
+            tela.classList.add("vitoria");
+            mensagem.textContent = "You win!";
+            tela.classList.add("ativa");
+            playMusic("win", false);
         }
     }
 }

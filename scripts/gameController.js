@@ -126,6 +126,8 @@ function handleVelocity(dt, gameObject) {
 
 //GAME STATE HANDLING
 
+const tela = document.querySelector(".tela-conclusao");
+const mensagem = document.querySelector("#mensagem-conclusao");
 let botaoTentarNovamente = document.querySelector("#botao-tentar-novamente");
 export function characterDied() {
     stopWaves();
@@ -135,20 +137,19 @@ export function characterDied() {
     Array.from(frameListeners).forEach(removeFrameListener);
     Array.from(gameObjects).forEach(removeGameObject);
     
-    document.querySelector(".tela-conclusao").style.display = "flex";
 
-    const img = new Image();
-    img.src = '../sprites/fundoMenuPrincipal.png';
-    img.onload = () => document.querySelector('#backgroundLayer').getContext('2d').drawImage(img, 0, 0);
+    tela.classList.remove("vitoria");
+    tela.classList.add("derrota");
+    mensagem.textContent = "You lose!";
+    tela.classList.add("ativa");
 
-
-    botaoTentarNovamente.addEventListener('click', () =>{
-        document.querySelector(".tela-conclusao").style.display = "none";
+    botaoTentarNovamente.onclick = () =>{
+        tela.classList.remove("ativa");
         setTimeout(() => {
             startAllGames();
             abilitiesManager.clearAbilitiesManager();
         }, 50);
-    })
+    }
 }
 
 export function startAllGames() {

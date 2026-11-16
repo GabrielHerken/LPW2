@@ -1,7 +1,7 @@
 import { tryToAttack } from "./attackController.js";
 import { character as mainCharacter } from "./characterController.js";
 import { addFrameListener, removeFrameListener } from "./gameController.js";
-import { getSwordAttackObject } from "./swordAttack.js";
+import {  getSwordAttackObject } from "./swordAttack.js";
 
 //PROPERTIES
 const velocity = 30;
@@ -18,6 +18,7 @@ export function basicEnemyStartAI(enemy) {
     const removeListener = () => removeFrameListener(listener);
     return removeListener;
 }
+
 
 function everyFrame(gameObject, attacks, dt) {
     if (mainCharacter == null)
