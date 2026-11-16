@@ -2,7 +2,7 @@ import { abilitiesManager } from "./abilitiesManager.js";
 import { character } from "./characterController.js";
 import { Ability } from "./stdModule.js";
 
-export const abilityOBJ = new Ability('Espinhos', './sprites/thorns.png', 'Toda vez que um inimigo te inflinja dano, reflita parte do dano de volta à ele.');
+export const abilityOBJ = new Ability('Reef Thorns', './sprites/thorns.png', 'Whoever hits you feels the pain return. Striking you is a very bad deal.');
 
 abilityOBJ.register = () => {
     const unregister = abilitiesManager.registerToEvent('combat:hit', args => {

@@ -31,7 +31,7 @@ export function getSwordAttackObject(owner) {
 }
 
 export function getSwordWeaponObject() {
-    return new Weapon('Espada', './sprites/espada.png', 'Ataca em uma região à sua frente, em curta distância', 15, 'sword');
+    return new Weapon('Captain Cutlass', './sprites/espada.png', 'Forged from a shipwreck’s hull. Even the salt of the sea fears its blade.', 15, 'sword');
 }
 
 //ATTACK EFFECT

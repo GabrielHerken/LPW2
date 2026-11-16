@@ -9,7 +9,7 @@ let currentMusic = null;
 let silenceMusic = false;
 const audioButton = document.querySelector("#botao-audio");
 
-// listener registrado UMA vez só
+
 audioButton.addEventListener('click', () => {
     silenceMusic = !silenceMusic;
 
@@ -37,8 +37,8 @@ export function playMusic(name, loop) {
     currentMusic = musics[name];
     currentMusic.loop = loop;
     currentMusic.volume = 0.3;
-
-    currentMusic.play();
+    if(!silenceMusic)
+        currentMusic.play();
 }
 
 cheet('r b g b', function (){

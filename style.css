@@ -387,7 +387,7 @@ canvas {
     display: grid;
     grid-template-rows: 6rem 1fr;
     grid-template-columns: .75fr 1fr 1fr;
-    gap: 2rem;
+    gap: 1rem;
 
     h1 {
         margin: 0;

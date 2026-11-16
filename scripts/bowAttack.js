@@ -31,7 +31,7 @@ export function getBowAttackObject(owner) {
 }
 
 export function getBowWeaponObject() {
-    return new Weapon('Arco', './sprites/arco.png', 'Atira flechas a distância', 30, 'bow');
+    return new Weapon('Mouth of Thunder', './sprites/arco.png', 'One roar, one cloud of smoke, and the enemy is gone. Dont aim, just pray.', 30, 'bow');
 }
 
 //ATTACK EFFECT

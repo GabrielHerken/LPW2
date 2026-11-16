@@ -1,7 +1,7 @@
 import { abilitiesManager } from "./abilitiesManager.js";
 import { Ability } from "./stdModule.js";
 
-export const abilityOBJ = new Ability('Berserker', './sprites/berserker.png', 'Se você estiver com menos da metade da vida, receba buffs');
+export const abilityOBJ = new Ability('Corsair Fury', './sprites/berserker.png', 'Pain fades, rage grows. Every wound fuels your next blow.');
 
 abilityOBJ.register = () => {
     const unregisterVelocity = abilitiesManager.registerAttribute('velocity', 0, (value, params) => {
