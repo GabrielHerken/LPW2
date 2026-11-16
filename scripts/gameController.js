@@ -130,6 +130,7 @@ let botaoTentarNovamente = document.querySelector("#botao-tentar-novamente");
 export function characterDied() {
     stopWaves();
     playMusic("lose", false);
+    document.querySelector("#store-button").style.display = "none";
     
     Array.from(frameListeners).forEach(removeFrameListener);
     Array.from(gameObjects).forEach(removeGameObject);

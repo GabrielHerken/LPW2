@@ -124,7 +124,7 @@ export function startWaves() {
     spawnSpawner(32, 84);
     spawnSpawner(116, 168);
 
-    nextWave();
+    nextWave();////
 }
 
 export function enemyKilled() {

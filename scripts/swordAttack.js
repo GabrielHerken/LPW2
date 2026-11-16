@@ -8,19 +8,19 @@ import { Attack, Entity, Transform, Vector2, Weapon } from "./stdModule.js";
 const spriteDistanceFromOwner = 30;
 const gameObjectDuration = .25;
 const maxCooldown = 0.5;
-const damage = 10;
+const damage = 8;
 const colliders = [
     {
         position: Vector2.up.multiplicar(6),
-        radius: 10
+        radius: 6
     },
     {
-        position: Vector2.right.multiplicar(18).somar(Vector2.up.multiplicar(3)),
-        radius: 10
+        position: Vector2.right.multiplicar(12).somar(Vector2.up.multiplicar(3)),
+        radius: 6
     },
     {
-        position: Vector2.right.multiplicar(-18).somar(Vector2.up.multiplicar(3)),
-        radius: 10
+        position: Vector2.right.multiplicar(-12).somar(Vector2.up.multiplicar(3)),
+        radius: 6
     }
 ];
 
