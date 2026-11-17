@@ -28,27 +28,27 @@ class Wave {
 
 const waves = [
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 3, 1)
+        new WaveBurst(enemies.basicEnemy, 1, 1)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 7, .5)
+        new WaveBurst(enemies.basicEnemy, 1, .5)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 10, .2)
+        new WaveBurst(enemies.basicEnemy, 1, .2)
     ]),
     new Wave([
         new WaveBurst(enemies.finalBoss, 1, 1)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 15, .2)
+        new WaveBurst(enemies.basicEnemy, 1, .2)
     ]),
     new Wave([
-        new WaveBurst(enemies.finalBoss, 1, 1),
-        new WaveBurst(enemies.basicEnemy, 10, 0.4)
+        new WaveBurst(enemies.finalBoss, 0, 1),
+        new WaveBurst(enemies.basicEnemy, 1, 0.4)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 10, .2),
-        new WaveBurst(enemies.finalBoss, 2, 10)
+        new WaveBurst(enemies.basicEnemy, 1, .2),
+        new WaveBurst(enemies.finalBoss, 0, 10)
     ])
 ];
 
@@ -85,9 +85,10 @@ function nextWave() {
     killedEnemies = 0;
 
     (async () => {
-        document.querySelector("#new-wave").style.display = "none";
+
         if (wavesUntilAbilities == 0) {
-            await newUpgrades();
+            setTimeout(() => newUpgrades(),1000);
+            
 
             wavesUntilAbilities = WAVES_PER_ABILITY;
         }
@@ -155,7 +156,8 @@ export function enemyKilled() {
             nextWave();
             refreshStore();
         } else {
-
+            document.querySelector("#botao-tentar-novamente").textContent = "Play again"
+            mensagem.textContent = "Play again";
             tela.classList.remove("derrota");
             tela.classList.add("vitoria");
             mensagem.textContent = "You win!";
