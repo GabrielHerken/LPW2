@@ -10,7 +10,7 @@ import { attributes } from './storeManager.js';
 import { getBowAttackObject } from './bowAttack.js';
 
 //PROPERTIES
-const initialMaxHealth = 50;
+const initialMaxHealth = 100;
 const initialVelocity = 100;
 const velocityMultiplier = 10.0;
 const forceMultiplier = 5.0;
@@ -27,7 +27,7 @@ export let character = null;
 export function createCharacter() {
     input = Vector2.zero;
     const characterSprite = new Image();
-    characterSprite.src = './sprites/protagonista.png';
+    characterSprite.src = './sprites/pirateSp.png';
     characterSprite.onload = () => {
         const canvasElement = canvas.entitiesLayer.element;
         const initialPosition = new Vector2(canvasElement.width / 2, canvasElement.height * 0.75);

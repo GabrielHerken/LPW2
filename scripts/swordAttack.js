@@ -8,7 +8,7 @@ import { Attack, Entity, Transform, Vector2, Weapon } from "./stdModule.js";
 const spriteDistanceFromOwner = 30;
 const gameObjectDuration = .25;
 const maxCooldown = 0.5;
-const damage = 8;
+const damage = 25;
 const colliders = [
     {
         position: Vector2.up.multiplicar(6),
@@ -37,7 +37,7 @@ export function getSwordWeaponObject() {
 //ATTACK EFFECT
 
 const sprite = new Image();
-sprite.src = './sprites/ataqueEspada.png';
+sprite.src = './sprites/swordAttack.png';
 
 function spawnGO(attackObject, direction) {
     const rotation = 90 + Math.atan2(direction.y, direction.x) * 180 / Math.PI;

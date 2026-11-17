@@ -50,6 +50,24 @@ canvas {
     animation: fadeAlert 3s ease-in-out forwards;
 }
 
+#new-wave{
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translateX(-50%);
+    font-size: 100px;
+    font-family: 'FontePiratas', serif;
+    color: #D9B56D;
+    text-align: center;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    z-index: 50;
+    -webkit-text-stroke: 0.01px #38251E;
+    animation: fadeAlert 3s ease-in-out forwards;
+}   
+
+
 @keyframes fadeAlert {
   0%   { opacity: 0; transform: translate(-50%, -10px); }
   10%  { opacity: 1; transform: translate(-50%, 0); }

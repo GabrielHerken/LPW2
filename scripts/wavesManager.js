@@ -22,23 +22,33 @@ class Wave {
         bursts.forEach(burst => {
             if (burst.type != null) total += burst.quantity;
         })
-
         this.total = total;
     }
 }
 
 const waves = [
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 1, 1)
+        new WaveBurst(enemies.basicEnemy, 3, 1)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 1, .5)
+        new WaveBurst(enemies.basicEnemy, 7, .5)
     ]),
     new Wave([
-        new WaveBurst(enemies.basicEnemy, 1, .2)
+        new WaveBurst(enemies.basicEnemy, 10, .2)
     ]),
     new Wave([
-        new WaveBurst(enemies.finalBoss,1,1)
+        new WaveBurst(enemies.finalBoss, 1, 1)
+    ]),
+    new Wave([
+        new WaveBurst(enemies.basicEnemy, 15, .2)
+    ]),
+    new Wave([
+        new WaveBurst(enemies.finalBoss, 1, 1),
+        new WaveBurst(enemies.basicEnemy, 10, 0.4)
+    ]),
+    new Wave([
+        new WaveBurst(enemies.basicEnemy, 10, .2),
+        new WaveBurst(enemies.finalBoss, 2, 10)
     ])
 ];
 
@@ -71,15 +81,17 @@ export function stopWaves() {
 }
 
 function nextWave() {
+   
     killedEnemies = 0;
 
     (async () => {
+        document.querySelector("#new-wave").style.display = "none";
         if (wavesUntilAbilities == 0) {
             await newUpgrades();
 
             wavesUntilAbilities = WAVES_PER_ABILITY;
         }
-
+        document.querySelector("#new-wave").style.display = "block";
         wavesUntilAbilities--;
 
         for (let i = 0; i < waves[wave].bursts.length; i++) {
@@ -116,6 +128,7 @@ async function spawnBurst(burst) {
 }
 
 export function startWaves() {
+
     wavesUntilAbilities = WAVES_PER_ABILITY
     toStop = false;
     wave = 0;

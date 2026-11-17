@@ -19,8 +19,8 @@ export class Enemy {
 }
 
 export const enemies = {
-    basicEnemy: new Enemy('Basic Enemy', './sprites/inimigo.png', 10, basicEnemyStartAI, 5, 10),
-    finalBoss: new Enemy('Final Boss', './sprites/protagonista.png',100,basicEnemyStartAI,0,0)
+    basicEnemy: new Enemy('Basic Enemy', './sprites/skeSprite.png', 50, basicEnemyStartAI, 5, 10),
+    finalBoss: new Enemy('Final Boss', './sprites/bossSprite.png',200,basicEnemyStartAI,10,30)
 }
 
 export function createEnemy(enemy, position) {

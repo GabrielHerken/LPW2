@@ -8,11 +8,19 @@ import { Attack, Entity, Transform, Vector2, Weapon } from "./stdModule.js";
 const spriteDistanceFromOwner = 30;
 const gameObjectDuration = .25;
 const maxCooldown = 0.5;
-const damage = 5;
+const damage = 10;
 const colliders = [
     {
         position: Vector2.up.multiplicar(20),
-        radius: 8
+        radius: 10
+    },
+    {
+        position: Vector2.up.multiplicar(10),
+        radius: 10
+    },
+    {
+        position: Vector2.up.multiplicar(1),
+        radius: 10
     }
 ];
 
@@ -29,7 +37,7 @@ export function getBowWeaponObject() {
 //ATTACK EFFECT
 
 const sprite = new Image();
-sprite.src = './sprites/ataqueEspada2.png';
+sprite.src = './sprites/bowAttack.png';
 
 function spawnGO(attackObject, direction) {
     const rotation = 90 + Math.atan2(direction.y, direction.x) * 180 / Math.PI;
