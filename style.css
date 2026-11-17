@@ -718,6 +718,33 @@ canvas {
     font-size: 18px;
 }
 
+.author {
+    display: flex;
+    align-items: center;   
+    gap: 20px;             
+    margin-bottom: 28px;
+}
+
+.authors-image {
+    width: 64px;
+    height: 64px;        
+    border-radius: 50%;
+    background-color: #684326;
+    border: 2px solid #D9B56D;
+}
+
+#janela-autores .author-info h2 {
+    margin: 0 0 6px;
+    color: #F0D39A;
+    font-size: 27px;
+}
+
+#janela-autores .author-info p {
+    margin: 0;
+    color: #E6D4B2;
+    font-size: 18px;
+}
+
 #botao-fecha-autores {
     position: absolute;
     top: 15px;
